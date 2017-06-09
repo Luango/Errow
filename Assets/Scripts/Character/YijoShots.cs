@@ -32,7 +32,7 @@ public class YijoShots : MonoBehaviour {
 
             // Normalized velocity to hit the point.
             float orientation = calculate_orientation(_Arrow.MouseRelease_Position.x - _Arrow.Yijo_Position.x, 
-                _Arrow.MouseRelease_Position.y - _Arrow.Yijo_Position.y, arrow_ini_speed, 0.31f);
+                _Arrow.MouseRelease_Position.y - _Arrow.Yijo_Position.y, arrow_ini_speed, 0.39f);
             _Arrow.velocity = new Vector3(Mathf.Cos(orientation), Mathf.Sin(orientation), 0f);
             
             GameObject an_arrow = Instantiate(a_test_arrow, _Arrow.Yijo_Position, Quaternion.Euler(new Vector3(0f, 0f, orientation * 180f / Mathf.PI))) as GameObject;

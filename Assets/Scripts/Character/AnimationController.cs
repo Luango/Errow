@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class DemoScene : MonoBehaviour
+public class AnimationController : MonoBehaviour
 {
     // movement config
     public float gravity = -25f;
