@@ -5,15 +5,18 @@ using UnityEngine;
 public class Mage : MonoBehaviour {
     public Animator _anim_mage;
     public GameObject _Yijo;
+    private bool facingYijo = false;
 
     private float shoot_frequency = 0.0f;
-    private float attack_range = 80f;
+    private float attack_range = 20f;
     public GameObject _test_Arrow;
     public Transform shot_position;
 
+    private float health;
+
 	// Use this for initialization
 	void Start () {
-		
+        health = 100f;
 	}
 	
 	// Update is called once per frame
@@ -24,18 +27,29 @@ public class Mage : MonoBehaviour {
         // calculate the distance
         float _distanceToYijo = Vector3.Distance(shot_position.position, _Yijo.transform.position);
         shoot_frequency -= Time.deltaTime;
-        if (_distanceToYijo<attack_range&&shoot_frequency<0f)
+        if (_distanceToYijo < attack_range)
         {
-            // Attack
-            Vector3 target_position = _Yijo.transform.position + new Vector3(0f, 2.5f, 0f);
-            Attack_Yijo(target_position);
-            shoot_frequency = 1.0f;
+            if (shoot_frequency < 0f)
+            {
+                // Attack
+                Vector3 target_position = _Yijo.transform.position + new Vector3(0f, 2.5f, 0f);
+                Attack_Yijo(target_position);
+                shoot_frequency = 1.0f;
+            }
+            _anim_mage.SetBool("Attack", true);
+        } else
+        {
+            _anim_mage.SetBool("Attack", false);
         }
 
         // Hitted
 
         // Die
-	}
+
+        // Face Yijo
+        LookAtYijo();
+
+    }
 
     private void Attack_Yijo(Vector3 target_position)
     {
@@ -46,5 +60,26 @@ public class Mage : MonoBehaviour {
         Vector3 velocity = new Vector3(Mathf.Cos(orientation), Mathf.Sin(orientation), 0f);
 
         an_arrow.GetComponent<Normal_Arrow>().velocity = velocity * 5.0f; // 5.0f is the speed
+    }
+
+    void Flip()
+    {
+        facingYijo = !facingYijo;
+
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
+    void LookAtYijo()
+    {
+        if (_Yijo.transform.position.x < transform.position.x && !facingYijo)
+        {
+            Flip();
+        }
+        else if (_Yijo.transform.position.x > transform.position.x && facingYijo)
+        {
+            Flip();
+        }
     }
 }

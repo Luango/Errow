@@ -154,10 +154,7 @@ public class AnimationController : MonoBehaviour
 		_velocity = _controller.velocity;
 
         // Look at cursor
-        if (Input.GetButton("Fire1"))
-        {
-            LookAtCursor();
-        }
+        LookAtCursor();
     }
 
     void Flip()
@@ -179,6 +176,5 @@ public class AnimationController : MonoBehaviour
         {
             Flip();
         }
-
     }
 }
