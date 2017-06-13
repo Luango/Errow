@@ -8,14 +8,20 @@ public class Normal_Arrow : MonoBehaviour {
      
     private float G = 0.05f; // Gravity
     private float LifeSpan = 3f;
+    private float arrow_damage = 33f;
 
 	// Use this for initialization
 	void Start () {
         // Calculate initial speed 
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         Arrow_movement();
 
