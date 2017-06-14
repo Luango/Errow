@@ -69,6 +69,7 @@ public class Mage : MonoBehaviour {
         Vector3 velocity = new Vector3(Mathf.Cos(orientation), Mathf.Sin(orientation), 0f);
 
         an_arrow.GetComponent<Normal_Arrow>().velocity = velocity * 5.0f; // 5.0f is the speed
+        an_arrow.GetComponent<Normal_Arrow>().shooter = transform.gameObject;
     }
 
     void Flip()

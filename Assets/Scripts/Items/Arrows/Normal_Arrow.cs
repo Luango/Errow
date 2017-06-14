@@ -5,6 +5,7 @@ using UnityEngine;
 public class Normal_Arrow : MonoBehaviour {
     [HideInInspector]
     public Vector3 velocity;
+    public GameObject shooter;
      
     private float G = 0.05f; // Gravity
     private float LifeSpan = 3f;
@@ -17,7 +18,10 @@ public class Normal_Arrow : MonoBehaviour {
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
+        if (shooter != collision.gameObject)
+        {
+            collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
+        }
     }
 
     // Update is called once per frame
