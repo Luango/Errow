@@ -11,8 +11,8 @@ public class Mage : MonoBehaviour {
     private float attack_range = 20f;
     public GameObject _test_Arrow;
     public Transform shot_position;
-
-    private float health;
+   
+    public float health;
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +45,12 @@ public class Mage : MonoBehaviour {
         // Hitted
 
         // Die
+        if (health < 0)
+        {
+            // Start death animation
+
+            // Remove object
+        }
 
         // Face Yijo
         LookAtYijo();
@@ -81,5 +87,10 @@ public class Mage : MonoBehaviour {
         {
             Flip();
         }
+    }
+
+    public void getDamaged(float Damage)
+    {
+        health -= Damage;
     }
 }
