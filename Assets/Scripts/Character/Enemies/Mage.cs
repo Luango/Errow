@@ -48,8 +48,11 @@ public class Mage : MonoBehaviour {
         if (health < 0)
         {
             // Start death animation
+            _anim_mage.SetBool("Attack", false);
+            _anim_mage.SetBool("Dead", true);
 
             // Remove object
+            Destroy(transform.gameObject, 3f);
         }
 
         // Face Yijo
