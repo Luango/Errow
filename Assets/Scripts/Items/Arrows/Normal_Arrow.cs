@@ -41,7 +41,7 @@ public class Normal_Arrow : MonoBehaviour {
     public void Arrow_movement()
     {
         // Gravity
-        velocity.y -= G;
+        velocity.y -= G*Time.deltaTime*60f;
         // Dot product of Velocity and (1, 0, 0) to calculate the angle
         float dot_Result = Vector3.Dot(velocity.normalized, new Vector3(1f, 0f, 0f));
         // Orientation is always largern than 0

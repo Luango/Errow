@@ -7,6 +7,7 @@ public class Space_Arrow : Normal_Arrow {
 
     void Start()
     {
+        G = 0.05f;
         LifeSpan = 15f;
         arrow_damage = 0f;
         Yijo = GameObject.FindGameObjectWithTag("Player");
@@ -27,6 +28,13 @@ public class Space_Arrow : Normal_Arrow {
         {
             TransportYijo();
         }
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (Time.timeScale == 1.0F)
+                Time.timeScale = 0.1F;
+            else
+                Time.timeScale = 1.0F;
+        }
     }
 
     // Transport Yijo
@@ -36,4 +44,5 @@ public class Space_Arrow : Normal_Arrow {
     }
 
     // Following Camera
+
 }
