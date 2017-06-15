@@ -35,8 +35,8 @@ public class YijoShots : MonoBehaviour {
             float orientation = an_arrow.GetComponent<Normal_Arrow>().Arrow_init_orientation(_Arrow.MouseRelease_Position.x - _Arrow.Yijo_Position.x,
             _Arrow.MouseRelease_Position.y - _Arrow.Yijo_Position.y, arrow_ini_speed, 0.31f);
             _Arrow.velocity = new Vector3(Mathf.Cos(orientation), Mathf.Sin(orientation), 0f);
-            an_arrow.GetComponent<Normal_Arrow>().velocity = _Arrow.velocity * arrow_ini_speed;
-            an_arrow.GetComponent<Normal_Arrow>().shooter = transform.gameObject;
+            an_arrow.GetComponent<Space_Arrow>().velocity = _Arrow.velocity * arrow_ini_speed;
+            an_arrow.GetComponent<Space_Arrow>().shooter = transform.gameObject;
         }
     }
 }

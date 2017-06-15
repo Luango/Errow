@@ -7,14 +7,11 @@ public class Normal_Arrow : MonoBehaviour {
     public Vector3 velocity;
     public GameObject shooter;
      
-    private float G = 0.05f; // Gravity
-    private float LifeSpan = 3f;
-    private float arrow_damage = 33f;
+    protected float G = 0.05f; // Gravity
+    protected float LifeSpan = 3f;
+    protected float arrow_damage = 33f;
 
-	// Use this for initialization
-	void Start () {
-        // Calculate initial speed 
-	}
+	
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
@@ -41,7 +38,7 @@ public class Normal_Arrow : MonoBehaviour {
     }
 
     // Arrow movement: direction --> click position
-    private void Arrow_movement()
+    public void Arrow_movement()
     {
         // Gravity
         velocity.y -= G;
