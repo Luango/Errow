@@ -10,14 +10,26 @@ public class Normal_Arrow : MonoBehaviour {
     protected float G = 0.05f; // Gravity
     protected float LifeSpan = 3f;
     protected float arrow_damage = 33f;
-
-	
-
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        gameObject.transform.parent = collision.gameObject.transform;
+        Debug.Log("Ground");
+        Destroy(this);
+    }
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (shooter != collision.gameObject)
+        if (shooter != collision.gameObject) // Not itself
         {
-            collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
+            string _tag = collision.gameObject.tag;
+            if(_tag == "Mage") {
+                collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
+                gameObject.transform.parent = collision.gameObject.transform;
+                Destroy(this);
+            } else if (_tag == "Ground")
+            {
+                gameObject.transform.parent = collision.gameObject.transform;
+                Destroy(this);
+            }
         }
     }
 

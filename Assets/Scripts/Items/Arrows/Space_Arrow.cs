@@ -9,7 +9,7 @@ public class Space_Arrow : Normal_Arrow {
     {
         G = 0.05f;
         LifeSpan = 15f;
-        arrow_damage = 0f;
+        arrow_damage = 1f;
         Yijo = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
