@@ -5,6 +5,8 @@ using UnityEngine;
 public class Space_Arrow : Normal_Arrow {
     public GameObject Yijo;
 
+    private float time_slowed_period = 0f;
+
     void Start()
     {
         G = 0.05f;
@@ -26,14 +28,19 @@ public class Space_Arrow : Normal_Arrow {
         }
         if (Input.GetKeyDown("space"))
         {
+            // Send Yijo to current space_arrow position.
             TransportYijo();
+            // Slow time for 2 seconds.
+            time_slowed_period = 1.5f;
         }
-        if (Input.GetButtonDown("Fire1"))
+        if (time_slowed_period > 0f)
         {
-            if (Time.timeScale == 1.0F)
-                Time.timeScale = 0.1F;
-            else
-                Time.timeScale = 1.0F;
+            Time.timeScale = 0.1f;
+            time_slowed_period -= Time.deltaTime*10f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
         }
     }
 

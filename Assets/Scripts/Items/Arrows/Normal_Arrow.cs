@@ -10,6 +10,8 @@ public class Normal_Arrow : MonoBehaviour {
     protected float G = 0.05f; // Gravity
     protected float LifeSpan = 3f;
     protected float arrow_damage = 33f;
+    
+    // Trigger for ground
     public void OnTriggerEnter2D(Collider2D collision)
     {
         string _tag = collision.gameObject.tag;
@@ -26,6 +28,7 @@ public class Normal_Arrow : MonoBehaviour {
             Destroy(this);
         }
     }
+    //
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (shooter != collision.gameObject) // Not itself
