@@ -9,6 +9,10 @@ public class YijoShots : MonoBehaviour {
         public Vector3 MouseRelease_Position;
         public Vector3 velocity;
     }
+    struct Status
+    {
+        public string current_arrow;
+    }
     private Arrow _Arrow;
     private float arrow_ini_speed = 5.0f;
     public GameObject a_test_arrow;
@@ -21,8 +25,9 @@ public class YijoShots : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // Shot the arrow
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1")&&ArrowManager.Space_Arrow_Num>0)
         {
+            ArrowManager.Space_Arrow_Num--;
             // Yijo position
             _Arrow.Yijo_Position = transform.position + new Vector3(0f, 2.5f, 0f);
 

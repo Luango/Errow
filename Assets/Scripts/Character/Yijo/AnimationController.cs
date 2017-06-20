@@ -80,7 +80,7 @@ public class AnimationController : MonoBehaviour
             _anim.SetBool("Grounded", true);
             _anim.SetBool("Jump", false);
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey("d"))
         {
             facingRight = true;
             normalizedHorizontalSpeed = 1;
@@ -96,7 +96,7 @@ public class AnimationController : MonoBehaviour
                 _anim.SetBool("Jump", false);
             }
         }
-		else if(Input.GetKey(KeyCode.LeftArrow ) )
+		else if(Input.GetKey("a") )
         {
             facingRight = false;
             normalizedHorizontalSpeed = -1;
@@ -125,7 +125,7 @@ public class AnimationController : MonoBehaviour
 
 
 		// we can only jump whilst grounded
-		if( _controller.isGrounded && Input.GetKeyDown( KeyCode.UpArrow ) )
+		if( _controller.isGrounded && Input.GetKeyDown( "w" ) )
 		{
 			_velocity.y = Mathf.Sqrt( 2f * jumpHeight * -gravity );
             //_anim.Play( Animator.StringToHash( "Jump" ) );
@@ -142,7 +142,7 @@ public class AnimationController : MonoBehaviour
 
 		// if holding down bump up our movement amount and turn off one way platform detection for a frame.
 		// this lets us jump down through one way platforms
-		if( _controller.isGrounded && Input.GetKey( KeyCode.DownArrow ) )
+		if( _controller.isGrounded && Input.GetKey( "s" ) )
 		{
 			_velocity.y *= 3f;
 			_controller.ignoreOneWayPlatformsThisFrame = true;

@@ -32,6 +32,7 @@ public class Space_Arrow : Normal_Arrow {
             TransportYijo();
             // Slow time for 2 seconds.
             time_slowed_period = 1.5f;
+            Destroy(this.gameObject.GetComponent<Renderer>());
         }
         if (time_slowed_period > 0f)
         {
