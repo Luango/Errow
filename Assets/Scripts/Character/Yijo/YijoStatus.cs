@@ -52,4 +52,9 @@ public class YijoStatus : MonoBehaviour {
     {
         current_Arrow = arrow_type;
     }
+
+    public void Damaged(float damage)
+    {
+        curr_health -= damage;
+    }
 }
