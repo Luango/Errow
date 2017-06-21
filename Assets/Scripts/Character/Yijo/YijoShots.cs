@@ -9,10 +9,6 @@ public class YijoShots : MonoBehaviour {
         public Vector3 MouseRelease_Position;
         public Vector3 velocity;
     }
-    struct Status
-    {
-        public string current_arrow;
-    }
     private Arrow _Arrow;
     private float arrow_ini_speed = 5.0f;
     public GameObject a_test_arrow;
