@@ -21,15 +21,21 @@ public class YijoStatus : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         current_Arrow = Arrow_Type.Normal;
-        curr_health = 100;
+        max_health = 100f;
+        curr_health = max_health;
 	}
 
     void Update()
     {
         HealthRecover();
         ManaRecover();
+        if (curr_health < 0f)
+        {
+            Debug.Log("SI LE");
+            Destroy(this.gameObject);
+        }
     }
 
     private void HealthRecover()

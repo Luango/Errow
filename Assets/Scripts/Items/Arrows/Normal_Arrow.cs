@@ -24,17 +24,17 @@ public class Normal_Arrow : MonoBehaviour {
             {
                 collider.enabled = false;
             }
-            Debug.Log("Ground");
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
     
-    public void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (shooter != collision.gameObject) // Not itself
         {
             string _tag = collision.gameObject.tag;
-            if(_tag == "Mage") {
+            if (_tag == "Mage")
+            {
                 collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
                 gameObject.transform.parent = collision.gameObject.transform;
                 BoxCollider2D[] BoxCollider2Ds;
@@ -43,8 +43,21 @@ public class Normal_Arrow : MonoBehaviour {
                 {
                     collider.enabled = false;
                 }
-                Debug.Log("Ground");
-                Destroy(this);
+                Debug.Log("Mage");
+                //Destroy(this);
+            }
+            if (_tag == "Player")
+            {
+                collision.gameObject.GetComponent<YijoStatus>().Damaged(arrow_damage);
+                gameObject.transform.parent = collision.gameObject.transform;
+                BoxCollider2D[] BoxCollider2Ds;
+                BoxCollider2Ds = gameObject.GetComponents<BoxCollider2D>();
+                foreach (BoxCollider2D collider in BoxCollider2Ds)
+                {
+                    collider.enabled = false;
+                }
+                Debug.Log("Player");
+                //Destroy(this);
             }
         }
     }

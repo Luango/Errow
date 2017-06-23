@@ -21,8 +21,6 @@ public class Mage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // Movement (No movement)
-
         // Attack Yijo
         // calculate the distance
         float _distanceToYijo = Vector3.Distance(shot_position.position, _Yijo.transform.position);
