@@ -20,8 +20,12 @@ public class YijoShots : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        
+    }
+    private void FixedUpdate()
+    {
         // Shot the arrow
-        if (Input.GetButtonUp("Fire1")&&ArrowManager.Space_Arrow_Num>0)
+        if (Input.GetButtonUp("Fire1") && ArrowManager.Space_Arrow_Num > 0)
         {
             ArrowManager.Space_Arrow_Num--;
             // Yijo position
@@ -31,7 +35,7 @@ public class YijoShots : MonoBehaviour {
             _Arrow.MouseRelease_Position = Input.mousePosition;
             _Arrow.MouseRelease_Position.z = 0f;
             _Arrow.MouseRelease_Position = Camera.main.ScreenToWorldPoint(_Arrow.MouseRelease_Position);
-            
+
             GameObject an_arrow = Instantiate(a_test_arrow, _Arrow.Yijo_Position, Quaternion.identity) as GameObject;
             float orientation = an_arrow.GetComponent<Normal_Arrow>().Arrow_init_orientation(_Arrow.MouseRelease_Position.x - _Arrow.Yijo_Position.x,
             _Arrow.MouseRelease_Position.y - _Arrow.Yijo_Position.y, arrow_ini_speed, 0.31f);
