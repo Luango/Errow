@@ -10,7 +10,7 @@ public class Normal_Arrow : MonoBehaviour {
     protected float G = 0.05f; // Gravity
     protected float LifeSpan = 3f;
     protected float arrow_damage = 33f;
-    
+
     // Trigger for ground
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,37 +27,35 @@ public class Normal_Arrow : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
-    
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (shooter != collision.gameObject) // Not itself
         {
             string _tag = collision.gameObject.tag;
-            if (_tag == "Mage")
+            if (_tag != "Arrow")
             {
-                collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
+                if (_tag == "Mage")
+                {
+                    collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
+                    gameObject.transform.parent = collision.gameObject.transform;
+                }
+                if (_tag == "Player")
+                {
+                    collision.gameObject.GetComponent<YijoStatus>().Damaged(arrow_damage);
+                    gameObject.transform.parent = collision.gameObject.transform;
+                }
+
+                // Arrow insert into object.
                 gameObject.transform.parent = collision.gameObject.transform;
-                BoxCollider2D[] BoxCollider2Ds;
-                BoxCollider2Ds = gameObject.GetComponents<BoxCollider2D>();
-                foreach (BoxCollider2D collider in BoxCollider2Ds)
+                CircleCollider2D[] BoxCollider2Ds;
+                BoxCollider2Ds = gameObject.GetComponents<CircleCollider2D>();
+                foreach (CircleCollider2D collider in BoxCollider2Ds)
                 {
                     collider.enabled = false;
                 }
                 Debug.Log("Mage");
-                //Destroy(this);
-            }
-            if (_tag == "Player")
-            {
-                collision.gameObject.GetComponent<YijoStatus>().Damaged(arrow_damage);
-                gameObject.transform.parent = collision.gameObject.transform;
-                BoxCollider2D[] BoxCollider2Ds;
-                BoxCollider2Ds = gameObject.GetComponents<BoxCollider2D>();
-                foreach (BoxCollider2D collider in BoxCollider2Ds)
-                {
-                    collider.enabled = false;
-                }
-                Debug.Log("Player");
-                //Destroy(this);
+                Destroy(this);
             }
         }
     }

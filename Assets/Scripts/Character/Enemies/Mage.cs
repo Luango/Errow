@@ -21,23 +21,9 @@ public class Mage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // Attack Yijo
-        // calculate the distance
-        float _distanceToYijo = Vector3.Distance(shot_position.position, _Yijo.transform.position);
-        shoot_frequency -= Time.deltaTime;
-        if (_distanceToYijo < attack_range)
+        if (_Yijo != null)
         {
-            if (shoot_frequency < 0f)
-            {
-                // Attack
-                Vector3 target_position = _Yijo.transform.position + new Vector3(0f, 2.5f, 0f);
-                Attack_Yijo(target_position);
-                shoot_frequency = 1.0f;
-            }
-            _anim_mage.SetBool("Attack", true);
-        } else
-        {
-            _anim_mage.SetBool("Attack", false);
+            Detect_Shoot_Yijo();
         }
 
         // Hitted
@@ -56,6 +42,30 @@ public class Mage : MonoBehaviour {
         // Face Yijo
         LookAtYijo();
 
+    }
+
+    private void Detect_Shoot_Yijo()
+    {
+
+        // Attack Yijo
+        // calculate the distance
+        float _distanceToYijo = Vector3.Distance(shot_position.position, _Yijo.transform.position);
+        shoot_frequency -= Time.deltaTime;
+        if (_distanceToYijo < attack_range && health > 0f)
+        {
+            if (shoot_frequency < 0f)
+            {
+                // Attack
+                Vector3 target_position = _Yijo.transform.position + new Vector3(0f, 2.5f, 0f);
+                Attack_Yijo(target_position);
+                shoot_frequency = 1.0f;
+            }
+            _anim_mage.SetBool("Attack", true);
+        }
+        else
+        {
+            _anim_mage.SetBool("Attack", false);
+        }
     }
 
     private void Attack_Yijo(Vector3 target_position)
@@ -81,13 +91,16 @@ public class Mage : MonoBehaviour {
 
     void LookAtYijo()
     {
-        if (_Yijo.transform.position.x < transform.position.x && !facingYijo)
+        if (_Yijo != null)
         {
-            Flip();
-        }
-        else if (_Yijo.transform.position.x > transform.position.x && facingYijo)
-        {
-            Flip();
+            if (_Yijo.transform.position.x < transform.position.x && !facingYijo)
+            {
+                Flip();
+            }
+            else if (_Yijo.transform.position.x > transform.position.x && facingYijo)
+            {
+                Flip();
+            }
         }
     }
 
