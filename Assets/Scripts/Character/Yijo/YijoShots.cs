@@ -20,10 +20,6 @@ public class YijoShots : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-    }
-    private void FixedUpdate()
-    {
         // Shot the arrow
         if (Input.GetButtonUp("Fire1") && ArrowManager.Space_Arrow_Num > 0)
         {

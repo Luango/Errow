@@ -15,15 +15,13 @@ public class GameStatesManager : MonoBehaviour {
         {
             isGaming = false;
             Time.timeScale = 0.1f;
-            print("q or e key down");
             // Show switch arrow or secondary weapon bar.
-
+            // Activate the weapon UI
         }
-        else
+        else if(isGaming == false)
         {
             isGaming = true;
             Time.timeScale = 1f;
-            print("q key up");
         }
     }
 
