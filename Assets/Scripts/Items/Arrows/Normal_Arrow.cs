@@ -8,7 +8,7 @@ public class Normal_Arrow : MonoBehaviour {
     public GameObject shooter;
      
     protected float G = 0.05f; // Gravity
-    protected float LifeSpan = 3f;
+    protected float LifeSpan = 8f;
     protected float arrow_damage = 33f;
 
     // Trigger for ground

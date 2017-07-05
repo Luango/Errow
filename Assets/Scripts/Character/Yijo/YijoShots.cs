@@ -13,9 +13,11 @@ public class YijoShots : MonoBehaviour {
     private float arrow_ini_speed = 5.0f;
     public GameObject a_test_arrow;
 
+    public Transform shootingPosition;
+
     private void Awake()
     {
-        _Arrow.Yijo_Position = transform.position;
+        _Arrow.Yijo_Position = shootingPosition.position;
     }
 	
 	// Update is called once per frame
@@ -25,7 +27,7 @@ public class YijoShots : MonoBehaviour {
         {
             ArrowManager.Space_Arrow_Num--;
             // Yijo position
-            _Arrow.Yijo_Position = transform.position + new Vector3(0f, 2.5f, 0f);
+            _Arrow.Yijo_Position = shootingPosition.position;
 
             // Mouse released position
             _Arrow.MouseRelease_Position = Input.mousePosition;

@@ -38,12 +38,12 @@ public class ScrollingBackgroundFourDirections : MonoBehaviour {
             ScrollRight();
         }
 
-        if (cameraTransform.position.y > (layers[topRowIndex].transform.position.y - 20))
+        if (cameraTransform.position.y > (layers[topRowIndex].transform.position.y))
         {
             ScrollUp();
         }
 
-        if (cameraTransform.position.y < (layers[bottomRowIndex*3].transform.position.y + 20))
+        if (cameraTransform.position.y < (layers[bottomRowIndex*3].transform.position.y))
         {
             ScrollDown();
         }
