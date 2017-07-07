@@ -15,6 +15,9 @@ public class YijoShots : MonoBehaviour {
 
     public Transform shootingPosition;
 
+    // Add the arrow to the render plane
+    public GameObject Fluid_Plane;
+
     private void Awake()
     {
         _Arrow.Yijo_Position = shootingPosition.position;
@@ -25,6 +28,7 @@ public class YijoShots : MonoBehaviour {
         // Shot the arrow
         if (Input.GetButtonUp("Fire1") && ArrowManager.Space_Arrow_Num > 0)
         {
+
             ArrowManager.Space_Arrow_Num--;
             // Yijo position
             _Arrow.Yijo_Position = shootingPosition.position;
@@ -40,6 +44,9 @@ public class YijoShots : MonoBehaviour {
             _Arrow.velocity = new Vector3(Mathf.Cos(orientation), Mathf.Sin(orientation), 0f);
             an_arrow.GetComponent<Normal_Arrow>().velocity = _Arrow.velocity * arrow_ini_speed;
             an_arrow.GetComponent<Normal_Arrow>().shooter = transform.gameObject;
+
+
+            Fluid_Plane.GetComponent<FluidSimulator>().AddArrow(an_arrow);
         }
     }
 }

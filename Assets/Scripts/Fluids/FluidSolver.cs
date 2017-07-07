@@ -85,8 +85,7 @@ using System.Collections;
 
     		_CreateAllTextures();
     		_CreateAllMaterials();
-
-            //_AddObstacles();
+        
     	}
 
     	private void _CreateTexture(ref RenderTexture tex, RenderTextureFormat format, FilterMode filter) {
