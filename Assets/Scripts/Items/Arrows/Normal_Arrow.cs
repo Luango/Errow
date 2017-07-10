@@ -39,22 +39,23 @@ public class Normal_Arrow : MonoBehaviour {
                 {
                     collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
                     gameObject.transform.parent = collision.gameObject.transform;
+                    // Arrow insert into object.
+                    gameObject.transform.parent = collision.gameObject.transform;
                 }
-                if (_tag == "Player")
+                else if (_tag == "Player")
                 {
                     collision.gameObject.GetComponent<YijoStatus>().Damaged(arrow_damage);
                     gameObject.transform.parent = collision.gameObject.transform;
+                    // Arrow insert into object.
+                    gameObject.transform.parent = collision.gameObject.transform;
                 }
 
-                // Arrow insert into object.
-                gameObject.transform.parent = collision.gameObject.transform;
                 CircleCollider2D[] BoxCollider2Ds;
                 BoxCollider2Ds = gameObject.GetComponents<CircleCollider2D>();
                 foreach (CircleCollider2D collider in BoxCollider2Ds)
                 {
                     collider.enabled = false;
                 }
-                Debug.Log("Mage");
                 Destroy(this);
             }
         }
@@ -63,7 +64,6 @@ public class Normal_Arrow : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        Arrow_movement();
 
         // Destroy
         if (LifeSpan < 0f)
@@ -76,11 +76,16 @@ public class Normal_Arrow : MonoBehaviour {
         }
     }
 
+    private void FixedUpdate()
+    {
+        Arrow_movement();
+    }
+
     // Arrow movement: direction --> click position
     public void Arrow_movement()
     {
         // Gravity
-        velocity.y -= G*Time.deltaTime*60f;
+        velocity.y -= G*Time.fixedDeltaTime*60f;
         // Dot product of Velocity and (1, 0, 0) to calculate the angle
         float dot_Result = Vector3.Dot(velocity.normalized, new Vector3(1f, 0f, 0f));
         // Orientation is always largern than 0
@@ -89,7 +94,7 @@ public class Normal_Arrow : MonoBehaviour {
         //Debug.Log("velocity = " + velocity);
 
         // Update arrow's position and orientation
-        transform.position += velocity * Time.deltaTime * 10f;
+        transform.position += velocity * Time.fixedDeltaTime * 10f;
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, orientation * 180f / Mathf.PI));
     }
 
@@ -110,7 +115,7 @@ public class Normal_Arrow : MonoBehaviour {
         float orientation = Mathf.Acos(Mathf.Sqrt(cos_sq_1));
         orientation = orientation * 180f / Mathf.PI;
 
-        float y_threshold = -(delta_x * delta_x * G) / (3.3f * 3.3f * 2);
+        float y_threshold = -(delta_x * delta_x * G) / (v * v * 2);
 
         // if delta_y < 0 delta_y > delta_y'
         if (delta_x >= 0)

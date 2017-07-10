@@ -10,7 +10,7 @@ public class YijoShots : MonoBehaviour {
         public Vector3 velocity;
     }
     private Arrow _Arrow;
-    private float arrow_ini_speed = 5.0f;
+    private float arrow_ini_speed = 8.0f;
     public GameObject a_test_arrow;
 
     public Transform shootingPosition;
@@ -45,8 +45,10 @@ public class YijoShots : MonoBehaviour {
             an_arrow.GetComponent<Normal_Arrow>().velocity = _Arrow.velocity * arrow_ini_speed;
             an_arrow.GetComponent<Normal_Arrow>().shooter = transform.gameObject;
 
-
-            Fluid_Plane.GetComponent<FluidSimulator>().AddArrow(an_arrow);
+            if (Fluid_Plane != null)
+            {
+                Fluid_Plane.GetComponent<FluidSimulator>().AddArrow(an_arrow);
+            }
         }
     }
 }

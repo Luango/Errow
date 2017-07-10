@@ -16,7 +16,6 @@ public class Space_Arrow : Normal_Arrow {
     }
     void Update()
     {
-        Arrow_movement();
 
         if (LifeSpan < 0f)
         {
@@ -42,6 +41,46 @@ public class Space_Arrow : Normal_Arrow {
         else
         {
             Time.timeScale = 1f;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+
+        Arrow_movement();
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (shooter != collision.gameObject) // Not itself
+        {
+            string _tag = collision.gameObject.tag;
+            if (_tag != "Arrow")
+            {
+                if (_tag == "Mage")
+                {
+                    collision.gameObject.GetComponent<Mage>().getDamaged(arrow_damage);
+                    gameObject.transform.parent = collision.gameObject.transform;
+                    // Arrow insert into object.
+                    gameObject.transform.parent = collision.gameObject.transform;
+                }
+                else if (_tag == "Player")
+                {
+                    collision.gameObject.GetComponent<YijoStatus>().Damaged(arrow_damage);
+                    gameObject.transform.parent = collision.gameObject.transform;
+                    // Arrow insert into object.
+                    gameObject.transform.parent = collision.gameObject.transform;
+                }
+
+                CircleCollider2D[] BoxCollider2Ds;
+                BoxCollider2Ds = gameObject.GetComponents<CircleCollider2D>();
+                foreach (CircleCollider2D collider in BoxCollider2Ds)
+                {
+                    collider.enabled = false;
+                }
+                // Instantiate an animation
+                Destroy(this.gameObject);
+            }
         }
     }
 
