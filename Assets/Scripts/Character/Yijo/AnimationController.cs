@@ -23,6 +23,8 @@ public class AnimationController : MonoBehaviour
     public Animator _anim;
     private RaycastHit2D _lastControllerColliderHit;
     private Vector3 _velocity;
+    private bool isAirJumped;
+    private float inAirTime;
 
 
     void Awake()
@@ -35,6 +37,8 @@ public class AnimationController : MonoBehaviour
         _controller.onControllerCollidedEvent += onControllerCollider;
         _controller.onTriggerEnterEvent += onTriggerEnterEvent;
         _controller.onTriggerExitEvent += onTriggerExitEvent;
+        isAirJumped = false;
+        inAirTime = 0.3f;
     }
 
     private void Start()
@@ -77,6 +81,8 @@ public class AnimationController : MonoBehaviour
         if (_controller.isGrounded)
         {
             _velocity.y = 0;
+            isAirJumped = false;
+            inAirTime = 0.3f;
             _anim.SetBool("Grounded", true);
             _anim.SetBool("Jump", false);
         }
@@ -84,19 +90,19 @@ public class AnimationController : MonoBehaviour
         {
             facingRight = true;
             normalizedHorizontalSpeed = 1;
-            if (transform.localScale.x < 0f) { 
+            if (transform.localScale.x < 0f) {
                 transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
             if (_controller.isGrounded)
             {
                 //_animator.Play( Animator.StringToHash( "Run" ) );
 
-                float h = Input.GetAxis("Horizontal")/3f;
+                float h = Input.GetAxis("Horizontal") / 3f;
                 _anim.SetFloat("Speed", Mathf.Abs(h));
                 _anim.SetBool("Jump", false);
             }
         }
-		else if(Input.GetKey("a") )
+        else if (Input.GetKey("a"))
         {
             facingRight = false;
             normalizedHorizontalSpeed = -1;
@@ -104,32 +110,39 @@ public class AnimationController : MonoBehaviour
             {
                 transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
-            if (_controller.isGrounded){
+            if (_controller.isGrounded) {
                 //_anim.Play( Animator.StringToHash("Run") );
 
                 float h = Input.GetAxis("Horizontal");
                 _anim.SetFloat("Speed", Mathf.Abs(h));
                 _anim.SetBool("Jump", false);
             }
-		}
-		else
-		{
-			normalizedHorizontalSpeed = 0; 
+        }
+        else
+        {
+            normalizedHorizontalSpeed = 0;
             if (_controller.isGrounded)
             {
                 _anim.SetBool("Grounded", true);
                 _anim.SetFloat("Speed", Mathf.Abs(0f));
                 _anim.SetBool("Jump", false);
             }
-		}
+        }
 
-
-		// we can only jump whilst grounded
-		if( _controller.isGrounded && Input.GetKeyDown( "w" ) )
+        // we can only jump whilst grounded
+        if ((_controller.isGrounded || inAirTime > 0f)  && Input.GetButton("Jump") && isAirJumped == false)
 		{
-			_velocity.y = Mathf.Sqrt( 2f * jumpHeight * -gravity );
+			_velocity.y = Mathf.Sqrt(0.8f * jumpHeight * -gravity );
             //_anim.Play( Animator.StringToHash( "Jump" ) );
             _anim.SetBool("Jump", true);
+            inAirTime -= Time.deltaTime;
+        }
+        if(!_controller.isGrounded && Input.GetKeyDown("w") && isAirJumped == false)
+        {
+            _velocity.y = Mathf.Sqrt(1.5f * jumpHeight * -gravity);
+            //_anim.Play( Animator.StringToHash( "Jump" ) );
+            _anim.SetBool("Jump", true);
+            isAirJumped = true;
         }
 
 

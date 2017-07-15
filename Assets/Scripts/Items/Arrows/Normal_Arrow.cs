@@ -41,6 +41,7 @@ public class Normal_Arrow : MonoBehaviour {
                     gameObject.transform.parent = collision.gameObject.transform;
                     // Arrow insert into object.
                     gameObject.transform.parent = collision.gameObject.transform;
+                    Destroy(this);
                 }
                 else if (_tag == "Player")
                 {
@@ -48,6 +49,14 @@ public class Normal_Arrow : MonoBehaviour {
                     gameObject.transform.parent = collision.gameObject.transform;
                     // Arrow insert into object.
                     gameObject.transform.parent = collision.gameObject.transform;
+                    Destroy(this);
+                }
+                else if (_tag == "Enemy")
+                {
+                    print("bleeding");
+                    collision.gameObject.GetComponent<Furfly>().StartBleeding();
+                    
+                    Destroy(this.gameObject);
                 }
 
                 CircleCollider2D[] BoxCollider2Ds;
@@ -56,7 +65,10 @@ public class Normal_Arrow : MonoBehaviour {
                 {
                     collider.enabled = false;
                 }
-                Destroy(this);
+                if (this != null)
+                {
+                    Destroy(this);
+                }
             }
         }
     }

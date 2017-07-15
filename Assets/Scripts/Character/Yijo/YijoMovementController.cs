@@ -22,8 +22,6 @@ public class YijoMovementController : MonoBehaviour {
         public bool below;
         public bool becameGroundedThisFrame;
         public bool wasGroundedLastFrame;
-        public bool movingDownSlope;
-        public float slopeAngle;
 
 
         public bool hasCollision()
@@ -34,15 +32,14 @@ public class YijoMovementController : MonoBehaviour {
 
         public void reset()
         {
-            right = left = above = below = becameGroundedThisFrame = movingDownSlope = false;
-            slopeAngle = 0f;
+            right = left = above = below = becameGroundedThisFrame = false; 
         }
 
 
         public override string ToString()
         {
-            return string.Format("[CharacterCollisionState2D] r: {0}, l: {1}, a: {2}, b: {3}, movingDownSlope: {4}, angle: {5}, wasGroundedLastFrame: {6}, becameGroundedThisFrame: {7}",
-                                 right, left, above, below, movingDownSlope, slopeAngle, wasGroundedLastFrame, becameGroundedThisFrame);
+            return string.Format("[CharacterCollisionState2D] r: {0}, l: {1}, a: {2}, b: {3}, angle: {5}, wasGroundedLastFrame: {6}, becameGroundedThisFrame: {7}",
+                                 right, left, above, below, wasGroundedLastFrame, becameGroundedThisFrame);
         }
     }
     #endregion
@@ -93,37 +90,20 @@ public class YijoMovementController : MonoBehaviour {
     /// </summary>
     [SerializeField]
     LayerMask oneWayPlatformMask = 0;
-
-    /// <summary>
-    /// the max slope angle that the CC2D can climb
-    /// </summary>
-    /// <value>The slope limit.</value>
-    [Range(0f, 90f)]
-    public float slopeLimit = 30f;
+    
 
     /// <summary>
     /// the threshold in the change in vertical movement between frames that constitutes jumping
     /// </summary>
     /// <value>The jumping threshold.</value>
     public float jumpingThreshold = 0.07f;
-
-
-    /// <summary>
-    /// curve for multiplying speed based on slope (negative = down slope and positive = up slope)
-    /// </summary>
-    public AnimationCurve slopeSpeedMultiplier = new AnimationCurve(new Keyframe(-90f, 1.5f), new Keyframe(0f, 1f), new Keyframe(90f, 0f));
+    
 
     [Range(2, 20)]
     public int totalHorizontalRays = 8;
     [Range(2, 20)]
     public int totalVerticalRays = 4;
-
-
-    /// <summary>
-    /// this is used to calculate the downward ray that is cast to check for slopes. We use the somewhat arbitrary value 75 degrees
-    /// to calculate the length of the ray that checks for slopes.
-    /// </summary>
-    float _slopeLimitTangent = Mathf.Tan(75f * Mathf.Deg2Rad);
+    
 
 
     [HideInInspector]
@@ -143,6 +123,7 @@ public class YijoMovementController : MonoBehaviour {
     [NonSerialized]
     public Vector3 velocity;
     public bool isGrounded { get { return collisionState.below; } }
+    
 
     const float kSkinWidthFloatFudgeFactor = 0.001f;
     #endregion
@@ -166,10 +147,7 @@ public class YijoMovementController : MonoBehaviour {
     // horizontal/vertical movement data
     float _verticalDistanceBetweenRays;
     float _horizontalDistanceBetweenRays;
-
-    // we use this flag to mark the case where we are travelling up a slope and we modified our delta.y to allow the climb to occur.
-    // the reason is so that if we reach the end of the slope we can make an adjustment to stay grounded
-    bool _isGoingUpSlope = false;
+    
 
     #region Monobehaviour
 
@@ -239,15 +217,9 @@ public class YijoMovementController : MonoBehaviour {
         // clear our state
         collisionState.reset();
         _raycastHitsThisFrame.Clear();
-        _isGoingUpSlope = false;
 
         primeRaycastOrigins();
-
-
-        // first, we check for a slope below us before moving
-        // only check slopes if we are going down and grounded
-        if (deltaMovement.y < 0f && collisionState.wasGroundedLastFrame)
-            handleVerticalSlope(ref deltaMovement);
+        
 
         // now we check movement in the horizontal dir
         if (deltaMovement.x != 0f)
@@ -268,10 +240,7 @@ public class YijoMovementController : MonoBehaviour {
         // set our becameGrounded state based on the previous and current collision state
         if (!collisionState.wasGroundedLastFrame && collisionState.below)
             collisionState.becameGroundedThisFrame = true;
-
-        // if we are going up a slope we artificially set a y velocity so we need to zero it out here
-        if (_isGoingUpSlope)
-            velocity.y = 0;
+        
 
         // send off the collision events if we have a listener
         if (onControllerCollidedEvent != null)
@@ -363,12 +332,6 @@ public class YijoMovementController : MonoBehaviour {
 
             if (_raycastHit)
             {
-                // the bottom ray can hit a slope but no other ray can so we have special handling for these cases
-                if (i == 0 && handleHorizontalSlope(ref deltaMovement, Vector2.Angle(_raycastHit.normal, Vector2.up)))
-                {
-                    _raycastHitsThisFrame.Add(_raycastHit);
-                    break;
-                }
 
                 // set our new deltaMovement and recalculate the rayDistance taking it into account
                 deltaMovement.x = _raycastHit.point.x - ray.x;
@@ -395,68 +358,6 @@ public class YijoMovementController : MonoBehaviour {
             }
         }
     }
-
-
-    /// <summary>
-    /// handles adjusting deltaMovement if we are going up a slope.
-    /// </summary>
-    /// <returns><c>true</c>, if horizontal slope was handled, <c>false</c> otherwise.</returns>
-    /// <param name="deltaMovement">Delta movement.</param>
-    /// <param name="angle">Angle.</param>
-    bool handleHorizontalSlope(ref Vector3 deltaMovement, float angle)
-    {
-        // disregard 90 degree angles (walls)
-        if (Mathf.RoundToInt(angle) == 90)
-            return false;
-
-        // if we can walk on slopes and our angle is small enough we need to move up
-        if (angle < slopeLimit)
-        {
-            // we only need to adjust the deltaMovement if we are not jumping
-            // TODO: this uses a magic number which isn't ideal! The alternative is to have the user pass in if there is a jump this frame
-            if (deltaMovement.y < jumpingThreshold)
-            {
-                // apply the slopeModifier to slow our movement up the slope
-                var slopeModifier = slopeSpeedMultiplier.Evaluate(angle);
-                deltaMovement.x *= slopeModifier;
-
-                // we dont set collisions on the sides for this since a slope is not technically a side collision.
-                // smooth y movement when we climb. we make the y movement equivalent to the actual y location that corresponds
-                // to our new x location using our good friend Pythagoras
-                deltaMovement.y = Mathf.Abs(Mathf.Tan(angle * Mathf.Deg2Rad) * deltaMovement.x);
-                var isGoingRight = deltaMovement.x > 0;
-
-                // safety check. we fire a ray in the direction of movement just in case the diagonal we calculated above ends up
-                // going through a wall. if the ray hits, we back off the horizontal movement to stay in bounds.
-                var ray = isGoingRight ? _raycastOrigins.bottomRight : _raycastOrigins.bottomLeft;
-                RaycastHit2D raycastHit;
-                if (collisionState.wasGroundedLastFrame)
-                    raycastHit = Physics2D.Raycast(ray, deltaMovement.normalized, deltaMovement.magnitude, platformMask);
-                else
-                    raycastHit = Physics2D.Raycast(ray, deltaMovement.normalized, deltaMovement.magnitude, platformMask & ~oneWayPlatformMask);
-
-                if (raycastHit)
-                {
-                    // we crossed an edge when using Pythagoras calculation, so we set the actual delta movement to the ray hit location
-                    deltaMovement = (Vector3)raycastHit.point - ray;
-                    if (isGoingRight)
-                        deltaMovement.x -= _skinWidth;
-                    else
-                        deltaMovement.x += _skinWidth;
-                }
-
-                _isGoingUpSlope = true;
-                collisionState.below = true;
-            }
-        }
-        else // too steep. get out of here
-        {
-            deltaMovement.x = 0;
-        }
-
-        return true;
-    }
-
 
     void moveVertically(ref Vector3 deltaMovement)
     {
@@ -498,56 +399,12 @@ public class YijoMovementController : MonoBehaviour {
                 }
 
                 _raycastHitsThisFrame.Add(_raycastHit);
-
-                // this is a hack to deal with the top of slopes. if we walk up a slope and reach the apex we can get in a situation
-                // where our ray gets a hit that is less then skinWidth causing us to be ungrounded the next frame due to residual velocity.
-                if (!isGoingUp && deltaMovement.y > 0.00001f)
-                    _isGoingUpSlope = true;
+                
 
                 // we add a small fudge factor for the float operations here. if our rayDistance is smaller
                 // than the width + fudge bail out because we have a direct impact
                 if (rayDistance < _skinWidth + kSkinWidthFloatFudgeFactor)
                     break;
-            }
-        }
-    }
-
-
-    /// <summary>
-    /// checks the center point under the BoxCollider2D for a slope. If it finds one then the deltaMovement is adjusted so that
-    /// the player stays grounded and the slopeSpeedModifier is taken into account to speed up movement.
-    /// </summary>
-    /// <param name="deltaMovement">Delta movement.</param>
-    private void handleVerticalSlope(ref Vector3 deltaMovement)
-    {
-        // slope check from the center of our collider
-        var centerOfCollider = (_raycastOrigins.bottomLeft.x + _raycastOrigins.bottomRight.x) * 0.5f;
-        var rayDirection = -Vector2.up;
-
-        // the ray distance is based on our slopeLimit
-        var slopeCheckRayDistance = _slopeLimitTangent * (_raycastOrigins.bottomRight.x - centerOfCollider);
-
-        var slopeRay = new Vector2(centerOfCollider, _raycastOrigins.bottomLeft.y);
-        DrawRay(slopeRay, rayDirection * slopeCheckRayDistance, Color.yellow);
-        _raycastHit = Physics2D.Raycast(slopeRay, rayDirection, slopeCheckRayDistance, platformMask);
-        if (_raycastHit)
-        {
-            // bail out if we have no slope
-            var angle = Vector2.Angle(_raycastHit.normal, Vector2.up);
-            if (angle == 0)
-                return;
-
-            // we are moving down the slope if our normal and movement direction are in the same x direction
-            var isMovingDownSlope = Mathf.Sign(_raycastHit.normal.x) == Mathf.Sign(deltaMovement.x);
-            if (isMovingDownSlope)
-            {
-                // going down we want to speed up in most cases so the slopeSpeedMultiplier curve should be > 1 for negative angles
-                var slopeModifier = slopeSpeedMultiplier.Evaluate(-angle);
-                // we add the extra downward movement here to ensure we "stick" to the surface below
-                deltaMovement.y += _raycastHit.point.y - slopeRay.y - skinWidth;
-                deltaMovement.x *= slopeModifier;
-                collisionState.movingDownSlope = true;
-                collisionState.slopeAngle = angle;
             }
         }
     }

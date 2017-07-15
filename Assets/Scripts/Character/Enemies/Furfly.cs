@@ -12,6 +12,19 @@ public class Furfly : MonoBehaviour {
 
     public GameObject bleeding;
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    { 
+        if(collision.gameObject.tag == "Player")
+        {
+            print("Hitted Player!");
+        }
+        if(collision.gameObject.tag == "Arrow")
+        {
+            print("Hitted by arrow");
+            Destroy(this.gameObject);
+        }
+    }
+
     // Use this for initialization
     private void Awake()
     {
@@ -21,13 +34,13 @@ public class Furfly : MonoBehaviour {
         endPos = endTransform.position;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void StartBleeding()
     {
-        print("bleeding");
-        if (collision.gameObject.tag == "Arrow")
-        {
-            Instantiate(bleeding, transform);
-        }
+        print("start bleeding");
+        GameObject tempBleeding = Instantiate(bleeding, transform);
+        tempBleeding.transform.SetParent(null);
+        print(tempBleeding);
+
     }
 
     // Update is called once per frame
@@ -38,7 +51,7 @@ public class Furfly : MonoBehaviour {
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, endPos, step);
             // Claculate distance to end
-            if(Vector3.Distance(this.gameObject.transform.position, endPos) < 0.5f)
+            if(Vector3.Distance(this.gameObject.transform.position, endPos) < 0.05f)
             {
                 isAtEnd = true;
             }
@@ -47,7 +60,7 @@ public class Furfly : MonoBehaviour {
             // Move to start
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, startPos, step);
-            if (Vector3.Distance(this.gameObject.transform.position, startPos) < 0.5f)
+            if (Vector3.Distance(this.gameObject.transform.position, startPos) < 0.05f)
             {
                 isAtEnd = false;
             }
