@@ -8,12 +8,16 @@ public class CharacterCamera : MonoBehaviour {
     public Vector3 mouse_world_position;
     public Vector3 difference;
     private float tracking_time;
+    private GameObject theSoulBall;
 
     // Update is called once per frame
     void Update () {
         Mouse_Position = Input.mousePosition;
         Mouse_Position.z = 0f;
         mouse_world_position = Camera.main.ScreenToWorldPoint(Mouse_Position);
+
+        theSoulBall = GameObject.FindGameObjectWithTag("Soul_Ball");
+
         // Yijo still alive.
         if (player != null)
         {

@@ -12,11 +12,13 @@ public class YijoShots : MonoBehaviour {
     private Arrow _Arrow;
     private float arrow_ini_speed = 8.0f;
     public GameObject a_test_arrow;
+    public GameObject Soul_Ball;
 
     public Transform shootingPosition;
 
     // Add the arrow to the render plane
     public GameObject Fluid_Plane;
+    static public bool hasShootSoulBall = false;
 
     private void Awake()
     {
@@ -49,6 +51,22 @@ public class YijoShots : MonoBehaviour {
             {
                 Fluid_Plane.GetComponent<FluidSimulator>().AddArrow(an_arrow);
             }
+        }
+        if (Input.GetButtonUp("Fire2") && hasShootSoulBall == false)
+        {
+            // Yijo position
+            _Arrow.Yijo_Position = shootingPosition.position;
+
+            // Mouse released position
+            _Arrow.MouseRelease_Position = Input.mousePosition;
+            _Arrow.MouseRelease_Position.z = 0f;
+            _Arrow.MouseRelease_Position = Camera.main.ScreenToWorldPoint(_Arrow.MouseRelease_Position);
+
+            Vector2 direction = _Arrow.MouseRelease_Position - _Arrow.Yijo_Position;
+
+            GameObject soul_ball = Instantiate(Soul_Ball, shootingPosition.position, Quaternion.identity) as GameObject;
+            soul_ball.GetComponent<Rigidbody2D>().AddForce(direction * 30f);
+            hasShootSoulBall = true;
         }
     }
 }
