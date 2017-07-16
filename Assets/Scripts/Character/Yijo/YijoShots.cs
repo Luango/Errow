@@ -22,7 +22,7 @@ public class YijoShots : MonoBehaviour {
 
     private void Awake()
     {
-        _Arrow.Yijo_Position = shootingPosition.position;
+        _Arrow.Yijo_Position = transform.position;
     }
 	
 	// Update is called once per frame
@@ -54,18 +54,17 @@ public class YijoShots : MonoBehaviour {
         }
         if (Input.GetButtonUp("Fire2") && hasShootSoulBall == false)
         {
-            // Yijo position
-            _Arrow.Yijo_Position = shootingPosition.position;
-
             // Mouse released position
             _Arrow.MouseRelease_Position = Input.mousePosition;
-            _Arrow.MouseRelease_Position.z = 0f;
             _Arrow.MouseRelease_Position = Camera.main.ScreenToWorldPoint(_Arrow.MouseRelease_Position);
+            _Arrow.MouseRelease_Position.z = -5f;
 
-            Vector2 direction = _Arrow.MouseRelease_Position - _Arrow.Yijo_Position;
+            Vector3 direction = _Arrow.MouseRelease_Position - shootingPosition.position;
+            direction.z = 0f;
+            direction = direction.normalized;
 
             GameObject soul_ball = Instantiate(Soul_Ball, shootingPosition.position, Quaternion.identity) as GameObject;
-            soul_ball.GetComponent<Rigidbody2D>().AddForce(direction * 30f);
+            soul_ball.GetComponent<Rigidbody2D>().velocity = (direction * 30f);
             hasShootSoulBall = true;
         }
     }
