@@ -23,7 +23,6 @@ public class CharacterCamera : MonoBehaviour {
         {
             if (theSoulBall != null)
             {
-                print("The soul ball is here.");
                 print(theSoulBall.transform.position.x);
                 mouse_world_position = new Vector3(Mathf.Clamp(mouse_world_position.x - player.position.x, -25f, 25f) / 2.5f, Mathf.Clamp(mouse_world_position.y - player.position.y, -15f, 15f) / 2.5f, 0f);
                 Vector3 target = new Vector3((theSoulBall.transform.position.x + player.position.x)/2 + mouse_world_position.x, (theSoulBall.transform.position.y + player.position.y)/2 + mouse_world_position.y, -10f);
