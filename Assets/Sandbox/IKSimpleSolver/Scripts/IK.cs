@@ -78,6 +78,7 @@ public class IK : MonoBehaviour {
     void OnDrawGizmos()
     {
 #if UNITY_EDITOR
+        /*
         if (Selection.Contains(targetPos.gameObject)&& toggleIK )
         {
             Gizmos.DrawIcon(targetPos.position, "IKHandle.png", false);
@@ -87,6 +88,7 @@ public class IK : MonoBehaviour {
             Gizmos.DrawLine(transform.position, targetPos.position);
             Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + d1 * Mathf.Cos(theta1), transform.position.y + d1 * Mathf.Sin(theta1), 0));
         }
+        */
 #endif
 
     }
