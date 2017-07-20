@@ -2,10 +2,13 @@
 using System.Collections;
 
 public class bubble : MonoBehaviour {
-
-    void OnCollisionEnter2D(Collision2D other)
+    private float lifeSpan = 2f;
+    private void Update()
     {
-        GameObject.Destroy(gameObject);
+        lifeSpan -= Time.deltaTime;
+        if (lifeSpan < 0f)
+        {
+            Destroy(gameObject);
+        }
     }
-
 }
