@@ -57,6 +57,27 @@ public class Normal_Arrow : MonoBehaviour {
                     collision.gameObject.GetComponent<Furfly>().StartBleeding();
                     
                     Destroy(this.gameObject);
+                } else if (_tag == "Apple")
+                {
+                    SpriteSlicer2D.ExplodeSprite(collision.rigidbody.gameObject, 16, 5.0f, true, ref SpriteSlicer2DDemoManager.m_SlicedSpriteInfo);
+                    // If we've chosen to fade out fragments once an object is destroyed, add a fade and destroy component
+                    for (int spriteIndex = 0; spriteIndex < SpriteSlicer2DDemoManager.m_SlicedSpriteInfo.Count; spriteIndex++)
+                    {
+                        for (int childSprite = 0; childSprite < SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects.Count; childSprite++)
+                        {
+                            if (!SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects[childSprite].GetComponent<Rigidbody2D>().isKinematic)
+                            { 
+                                SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects[childSprite].AddComponent<FadeAndDestroy>();
+                            }
+                        }
+                    }
+                    SpriteSlicer2DDemoManager.m_SlicedSpriteInfo.Clear();
+                    Destroy(this.gameObject);
+                    /*
+                    gameObject.transform.parent = collision.gameObject.transform;
+                    gameObject.GetComponent<Rigidbody2D>().simulated = false;
+                    collision.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * (-800f));
+                    */
                 }
 
                 CircleCollider2D[] BoxCollider2Ds;
