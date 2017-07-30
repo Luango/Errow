@@ -6,6 +6,7 @@ public class Normal_Arrow : MonoBehaviour {
     [HideInInspector]
     public Vector3 velocity;
     public GameObject shooter;
+    public GameObject player;
      
     protected float G = 0.05f; // Gravity
     protected float LifeSpan = 8f;
@@ -15,24 +16,32 @@ public class Normal_Arrow : MonoBehaviour {
     public void OnTriggerEnter2D(Collider2D collision)
     {
         string _tag = collision.gameObject.tag;
-        if (_tag == "Ground")
+        print("trigger tag: " + _tag);
+        if (_tag == "ground" || _tag == "Ground")
         {
-            gameObject.transform.parent = collision.gameObject.transform;
-            BoxCollider2D[] BoxCollider2Ds;
-            BoxCollider2Ds = gameObject.GetComponents<BoxCollider2D>();
-            foreach (BoxCollider2D collider in BoxCollider2Ds)
+            GameObject children;
+            children = this.gameObject.transform.GetChild(0).gameObject;
+            Destroy(children);
+
+            CircleCollider2D[] BoxCollider2Ds;
+            BoxCollider2Ds = gameObject.GetComponents<CircleCollider2D>();
+            foreach (CircleCollider2D collider in BoxCollider2Ds)
             {
                 collider.enabled = false;
             }
-            Destroy(this.gameObject);
+            if (this != null)
+            {
+                Destroy(this);
+            }
         }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
-    {
+    { 
         if (shooter != collision.gameObject) // Not itself
         {
             string _tag = collision.gameObject.tag;
+            print("tag: " + tag);
             if (_tag != "Arrow")
             {
                 if (_tag == "Mage")
@@ -66,7 +75,8 @@ public class Normal_Arrow : MonoBehaviour {
                         for (int childSprite = 0; childSprite < SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects.Count; childSprite++)
                         {
                             if (!SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects[childSprite].GetComponent<Rigidbody2D>().isKinematic)
-                            { 
+                            {
+                                Physics2D.IgnoreCollision(SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects[childSprite].GetComponent<PolygonCollider2D>(), player.GetComponent<BoxCollider2D>());
                                 SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects[childSprite].AddComponent<FadeAndDestroy>();
                             }
                         }
