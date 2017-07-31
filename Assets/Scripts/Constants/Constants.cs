@@ -5,13 +5,5 @@ using UnityEngine;
 public class Constants : MonoBehaviour {
     static public float SpiderHeartSpawnTime = 3.0f;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    static public float FemaleSpiderShootingTime = 3.0f;
 }
