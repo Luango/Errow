@@ -68,7 +68,7 @@ public class Normal_Arrow : MonoBehaviour {
                     Destroy(this.gameObject);
                 } else if (_tag == "Apple")
                 {
-                    SpriteSlicer2D.ExplodeSprite(collision.rigidbody.gameObject, 16, 5.0f, true, ref SpriteSlicer2DDemoManager.m_SlicedSpriteInfo);
+                    SpriteSlicer2D.ExplodeSprite(collision.rigidbody.gameObject, 5, 15.0f, true, ref SpriteSlicer2DDemoManager.m_SlicedSpriteInfo);
                     // If we've chosen to fade out fragments once an object is destroyed, add a fade and destroy component
                     for (int spriteIndex = 0; spriteIndex < SpriteSlicer2DDemoManager.m_SlicedSpriteInfo.Count; spriteIndex++)
                     {
@@ -76,7 +76,7 @@ public class Normal_Arrow : MonoBehaviour {
                         {
                             if (!SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects[childSprite].GetComponent<Rigidbody2D>().isKinematic)
                             {
-                                Physics2D.IgnoreCollision(SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects[childSprite].GetComponent<PolygonCollider2D>(), player.GetComponent<BoxCollider2D>());
+                                SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects[childSprite].layer = LayerMask.NameToLayer("Apple");
                                 SpriteSlicer2DDemoManager.m_SlicedSpriteInfo[spriteIndex].ChildObjects[childSprite].AddComponent<FadeAndDestroy>();
                             }
                         }

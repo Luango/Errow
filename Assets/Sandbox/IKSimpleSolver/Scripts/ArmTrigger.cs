@@ -8,10 +8,17 @@ public class ArmTrigger : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if(other)
-            transform.FindChild("target").position = Vector2.Lerp(transform.FindChild("target").position, other.transform.position,.1f);
+        if (other)
+        {
+            if (other.tag == "SpiderTarget")
+            {
+                transform.FindChild("target").position = Vector2.Lerp(transform.FindChild("target").position, other.transform.position, .1f);
+            }
+        }
         else
+        {
             transform.FindChild("target").position = Vector2.Lerp(transform.FindChild("target").position, home.position, .1f);
+        }
     }
     
     void Update()
