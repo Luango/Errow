@@ -10,7 +10,7 @@ public class Normal_Arrow : MonoBehaviour {
      
     protected float G = 0.05f; // Gravity
     protected float LifeSpan = 8f;
-    protected float arrow_damage = 33f;
+    protected int arrow_damage = 1;
 
     // Trigger for ground
     public void OnTriggerEnter2D(Collider2D collision)

@@ -18,10 +18,10 @@ public class YijoStatusUI : MonoBehaviour {
         manaText.text = "Mana: " + YijoStatus.curr_mana;
 
         Text healthText = health.GetComponent<Text>();
-        healthText.text = "Health: " + YijoStatus.curr_health;
+        //healthText.text = "Health: " + YijoStatus.curr_health;
 
         Text yuanText = yuan.GetComponent<Text>();
-        yuanText.text = "Yuans: " + YijoStatus.yuan;
+        //yuanText.text = "Yuans: " + YijoStatus.yuan;
     }
 	
 	// Update is called once per frame
@@ -29,7 +29,7 @@ public class YijoStatusUI : MonoBehaviour {
         if (damaged)
         {
             Text healthText = health.GetComponent<Text>();
-            healthText.text = "Health: "+ YijoStatus.curr_health;
+            //healthText.text = "Health: "+ YijoStatus.curr_health;
         }
 
         if (casted)

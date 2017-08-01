@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class YijoStatus : MonoBehaviour {
-    static public float curr_health;
-    public float max_health;
-    public float health_recover_speed = 0f;
+    public int curr_health;
+    public int max_health;
+    public int health_recover_speed = 0;
     public bool damaged;
 
-    static public float curr_mana;
-    public float max_mana;
-    public float mana_recover_speed = 0f;
+    static public int curr_mana;
+    public int max_mana;
+    public int mana_recover_speed = 0;
     public bool casted;
 
     static public int yuan;
@@ -35,7 +35,7 @@ public class YijoStatus : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         current_Arrow = Arrow_Type.Normal;
-        max_health = 100000f;
+        max_health = 3;
         curr_health = max_health;
         yuan = 1000;
 	}
@@ -45,7 +45,7 @@ public class YijoStatus : MonoBehaviour {
         HealthRecover();
         ManaRecover();
 
-        if (curr_health < 0f)
+        if (curr_health <= 0f)
         {
             Debug.Log("SI LE");
             Destroy(this.gameObject);
@@ -73,14 +73,14 @@ public class YijoStatus : MonoBehaviour {
         current_Arrow = arrow_type;
     }
 
-    public void Damaged(float damage)
+    public void Damaged(int damage)
     {
-        curr_health -= damage;
+        curr_health -= 1;
         YijoStatusUI.UpdateHealth();
     }
 
     // Cast speel arrow
-    public void Casted(float manaCosts)
+    public void Casted(int manaCosts)
     {
         curr_mana -= manaCosts;
         YijoStatusUI.UpdateMana();

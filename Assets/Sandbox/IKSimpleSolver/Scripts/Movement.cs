@@ -24,7 +24,7 @@ public class Movement : MonoBehaviour {
         generatingTime -= Time.deltaTime;
         if(generatingTime < 0f)
         {
-            print("generate a ball");
+            //print("generate a ball");
             generatingTime = 2f;
             for (int i = 0; i < 6; i++)
             {

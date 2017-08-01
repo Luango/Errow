@@ -11,7 +11,7 @@ public class Space_Arrow : Normal_Arrow {
     {
         G = 0.05f;
         LifeSpan = 15f;
-        arrow_damage = 1f;
+        arrow_damage = 1;
         Yijo = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
@@ -89,7 +89,4 @@ public class Space_Arrow : Normal_Arrow {
     {
         Yijo.transform.position = transform.position;
     }
-
-    // Following Camera
-
 }

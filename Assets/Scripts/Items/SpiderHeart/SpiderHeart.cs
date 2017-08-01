@@ -20,7 +20,7 @@ public class SpiderHeart : MonoBehaviour {
 
         if(Vector3.Distance(gameObject.transform.position, FemaleSpider.transform.position) < 3f)
         {
-            print("destroy?");
+            //print("destroy? spider heart");
             Destroy(this.gameObject);
         }
 	}
