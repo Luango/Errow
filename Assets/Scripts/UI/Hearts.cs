@@ -9,6 +9,9 @@ public class Hearts : MonoBehaviour {
     private int curr_health;
     public List<GameObject> heartList;
 
+    public float height;
+    public float width;
+
 	// Use this for initialization
 	void Start () {
         curr_health = player.GetComponent<YijoStatus>().curr_health;
@@ -25,7 +28,12 @@ public class Hearts : MonoBehaviour {
         {
             if (player.GetComponent<YijoStatus>().curr_health > curr_health)
             {
+                // 70f, 870f
+                GameObject heart = Instantiate(heartUI, new Vector3(width, height, 0) + Vector3.right * (heartList.Count) * 50f, Quaternion.identity);
+                heart.transform.SetParent(canvas);
+                heartList.Add(heart);
 
+                curr_health = player.GetComponent<YijoStatus>().curr_health;
             }
             else if (player.GetComponent<YijoStatus>().curr_health < curr_health)
             {

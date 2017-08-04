@@ -34,6 +34,6 @@ public class SpiderEmits : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position = Vector3.MoveTowards(transform.position, playerPos, 50f * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, playerPos, 70f * Time.deltaTime);
 	}
 }

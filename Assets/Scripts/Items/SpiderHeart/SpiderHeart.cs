@@ -16,12 +16,17 @@ public class SpiderHeart : MonoBehaviour {
         // find
         FemaleSpider = GameObject.FindGameObjectWithTag("FemaleSpider");
         // Move the heart to the FemaleSpider.
-        gameObject.transform.Translate((FemaleSpider.transform.position - gameObject.transform.position) *Time.deltaTime);
-
-        if(Vector3.Distance(gameObject.transform.position, FemaleSpider.transform.position) < 3f)
+        if (FemaleSpider != null)
         {
-            //print("destroy? spider heart");
-            Destroy(this.gameObject);
+            gameObject.transform.Translate((FemaleSpider.transform.position - gameObject.transform.position) * Time.deltaTime);
+        }
+
+        if (FemaleSpider != null)
+        {
+            if (Vector3.Distance(gameObject.transform.position, FemaleSpider.transform.position) < 3f)
+            {
+                Destroy(this.gameObject);
+            }
         }
 	}
 }

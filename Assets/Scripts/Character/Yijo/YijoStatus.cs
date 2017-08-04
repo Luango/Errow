@@ -7,6 +7,7 @@ public class YijoStatus : MonoBehaviour {
     public int max_health;
     public int health_recover_speed = 0;
     public bool damaged;
+    public float damagedTime = 0;
 
     static public int curr_mana;
     public int max_mana;
@@ -24,6 +25,7 @@ public class YijoStatus : MonoBehaviour {
     {
 
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Coin")
@@ -49,6 +51,15 @@ public class YijoStatus : MonoBehaviour {
         {
             Debug.Log("SI LE");
             Destroy(this.gameObject);
+        }
+        if (damagedTime>0f)
+        {
+            damagedColor();
+            damagedTime -= Time.deltaTime;
+        }
+        else
+        {
+            healthyColor();
         }
     }
 
@@ -77,6 +88,27 @@ public class YijoStatus : MonoBehaviour {
     {
         curr_health -= 1;
         YijoStatusUI.UpdateHealth();
+        
+        damagedColor();
+        damaged = true;
+        damagedTime = Constants.PlayerDamagedTime;
+    }
+
+    private void damagedColor()
+    {
+        Component[] SpriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer Sprite in SpriteRenderers)
+        {
+            Sprite.color = Color.red;
+        }
+    }
+    private void healthyColor()
+    {
+        Component[] SpriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer Sprite in SpriteRenderers)
+        {
+            Sprite.color = Color.white;
+        }
     }
 
     // Cast speel arrow
