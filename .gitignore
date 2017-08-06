@@ -23,18 +23,29 @@
 *.unitypackage
 *.zip
 *.chw
+*.mp3
+*.exr
+*.FBX
+*.wav
+*.ttf
+*.mov
+*.js
+*.flare
+
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 *.controller
 *.unity
+*.guiskin
 
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+Standard_Assets/
 x64/
 x86/
 bld/
@@ -284,3 +295,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+Assets/Standard Assets/Particles/Sources/Shaders/Particle Alpha Blend (Queue +100).shader
+Assets/Standard Assets/Character Controllers/Sources/Scripts/MouseLook.cs

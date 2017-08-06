@@ -25,6 +25,7 @@ public class SpiderHeart : MonoBehaviour {
         {
             if (Vector3.Distance(gameObject.transform.position, FemaleSpider.transform.position) < 3f)
             {
+                FemaleSpider.GetComponent<FemaleSpider>().health += 1;
                 Destroy(this.gameObject);
             }
         }

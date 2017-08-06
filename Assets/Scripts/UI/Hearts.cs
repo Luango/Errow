@@ -16,7 +16,7 @@ public class Hearts : MonoBehaviour {
 	void Start () {
         curr_health = player.GetComponent<YijoStatus>().curr_health;
         for (int i = 0; i < curr_health; i++) {
-            GameObject heart = Instantiate(heartUI, new Vector3(70f, 870f, 0) + Vector3.right * i * 50f, Quaternion.identity);
+            GameObject heart = Instantiate(heartUI, new Vector3(width, height, 0) + Vector3.right * i * 50f, Quaternion.identity);
             heart.transform.SetParent(canvas);
             heartList.Add(heart);
         }

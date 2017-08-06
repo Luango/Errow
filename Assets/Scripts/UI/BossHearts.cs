@@ -20,7 +20,7 @@ public class BossHearts : MonoBehaviour {
         curr_health = boss.GetComponent<FemaleSpider>().health;
         for (int i = 0; i < curr_health; i++)
         {
-            GameObject heart = Instantiate(heartUI, new Vector3(width, height, 0) + Vector3.right * i * gap, Quaternion.identity);
+            GameObject heart = Instantiate(heartUI, new Vector3(50, 80, 0) + Vector3.right * i * gap, Quaternion.identity);
             heart.transform.SetParent(canvas);
             heartList.Add(heart);
         }
@@ -29,6 +29,7 @@ public class BossHearts : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        
         if (boss != null)
         {
             if (boss.GetComponent<FemaleSpider>().health > curr_health)
@@ -48,5 +49,6 @@ public class BossHearts : MonoBehaviour {
                 curr_health = boss.GetComponent<FemaleSpider>().health;
             }
         }
+        
     }
 }
