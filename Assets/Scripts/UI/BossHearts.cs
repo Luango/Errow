@@ -13,6 +13,7 @@ public class BossHearts : MonoBehaviour {
     public float height;
     public float width;
     public float gap;
+    private bool ini = true;
 
     // Use this for initialization
     void Start()
@@ -20,9 +21,9 @@ public class BossHearts : MonoBehaviour {
         curr_health = boss.GetComponent<FemaleSpider>().health;
         for (int i = 0; i < curr_health; i++)
         {
-            GameObject heart = Instantiate(heartUI, new Vector3(50, 80, 0) + Vector3.right * i * gap, Quaternion.identity);
-            heart.transform.SetParent(canvas);
-            heartList.Add(heart);
+            //GameObject heart = Instantiate(heartUI, new Vector3(width, height, 0) + Vector3.right * i * gap, Quaternion.identity);
+            //heart.transform.SetParent(canvas);
+            //heartList.Add(heart);
         }
     }
 
@@ -32,11 +33,23 @@ public class BossHearts : MonoBehaviour {
         
         if (boss != null)
         {
-            if (boss.GetComponent<FemaleSpider>().health > curr_health)
+            if (ini)
             {
-                // 70f, 870f
-                GameObject heart = Instantiate(heartUI, new Vector3(width, height, 0) + Vector3.right * (heartList.Count) * gap, Quaternion.identity);
+                ini = false;
+                for (int i = 0; i < curr_health; i++)
+                {
+                    GameObject heart = Instantiate(heartUI, Vector3.zero, Quaternion.identity);
+                    heart.transform.SetParent(canvas);
+                    heart.transform.position = new Vector3(width, height, 0) + Vector3.right * i * gap;
+                    heartList.Add(heart);
+                }
+            }
+            else if (boss.GetComponent<FemaleSpider>().health > curr_health)
+            {
+                // 70f, 870f 
+                GameObject heart = Instantiate(heartUI, Vector3.zero, Quaternion.identity);
                 heart.transform.SetParent(canvas);
+                heart.transform.position = heartList[curr_health-1].transform.position + Vector3.right * gap;
                 heartList.Add(heart);
 
                 curr_health = boss.GetComponent<FemaleSpider>().health;

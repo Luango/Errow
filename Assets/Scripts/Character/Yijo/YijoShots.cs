@@ -54,6 +54,7 @@ public class YijoShots : MonoBehaviour {
         }
         if (Input.GetButtonUp("Fire2") && hasShootSoulBall == false)
         {
+            /*
             // Mouse released position
             _Arrow.MouseRelease_Position = Input.mousePosition;
             _Arrow.MouseRelease_Position = Camera.main.ScreenToWorldPoint(_Arrow.MouseRelease_Position);
@@ -66,6 +67,7 @@ public class YijoShots : MonoBehaviour {
             GameObject soul_ball = Instantiate(Soul_Ball, shootingPosition.position, Quaternion.identity) as GameObject;
             soul_ball.GetComponent<Rigidbody2D>().velocity = (direction * 30f);
             hasShootSoulBall = true;
+            */
         }
     }
 }
