@@ -18,14 +18,17 @@ public class SpiderHeart : MonoBehaviour {
         // Move the heart to the FemaleSpider.
         if (FemaleSpider != null)
         {
-            gameObject.transform.Translate((FemaleSpider.transform.position - gameObject.transform.position) * Time.deltaTime);
+            gameObject.transform.Translate((FemaleSpider.transform.position - gameObject.transform.position).normalized * 50f * Time.deltaTime);
         }
 
         if (FemaleSpider != null)
         {
-            if (Vector3.Distance(gameObject.transform.position, FemaleSpider.transform.position) < 3f)
+            if (Vector3.Distance(gameObject.transform.position, FemaleSpider.transform.position) < 8f)
             {
-                FemaleSpider.GetComponent<FemaleSpider>().health += 1;
+                if (FemaleSpider.GetComponent<FemaleSpider>().health < 63)
+                {
+                    FemaleSpider.GetComponent<FemaleSpider>().health += 1;
+                }
                 Destroy(this.gameObject);
             }
         }

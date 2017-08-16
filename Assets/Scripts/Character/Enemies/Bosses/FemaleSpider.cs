@@ -44,8 +44,11 @@ public class FemaleSpider : MonoBehaviour {
         SpiderShootingTime -= Time.deltaTime;
         if (SpiderShootingTime < 0f)
         {
-            Instantiate(SpiderEmit, transform.position, Quaternion.identity);
-            SpiderShootingTime = Constants.FemaleSpiderShootingTime;
+            for (int i = 0; i < 3; i++)
+            {
+                Instantiate(SpiderEmit, transform.position, Quaternion.identity);
+                SpiderShootingTime = Constants.FemaleSpiderShootingTime;
+            }
         }
 
         if (damagedTime > 0f)

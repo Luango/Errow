@@ -29,6 +29,7 @@ public class SpiderEmits : MonoBehaviour {
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
             playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            playerPos += new Vector3(Random.Range(-50f, 50f), Random.Range(-50f, 50f), 0f);
         }	
 	}
 	
