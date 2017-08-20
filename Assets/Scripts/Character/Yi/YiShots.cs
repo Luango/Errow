@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class YiShots : MonoBehaviour {
+public class YijoShots : MonoBehaviour {
     struct Arrow
     {
         public Vector3 Yijo_Position;

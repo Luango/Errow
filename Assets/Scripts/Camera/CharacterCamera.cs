@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CharacterCamera : MonoBehaviour {
     public Transform player;
@@ -15,10 +16,10 @@ public class CharacterCamera : MonoBehaviour {
         Mouse_Position = Input.mousePosition;
         Mouse_Position.z = 0f;
         mouse_world_position = Camera.main.ScreenToWorldPoint(Mouse_Position);
-
+        
         theSoulBall = GameObject.FindGameObjectWithTag("Soul_Ball");
 
-        // Yijo still alive.
+        // Yi still alive.
         if (player != null)
         {
             if (theSoulBall != null)

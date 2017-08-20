@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class YiStatus : MonoBehaviour {
+public class YijoStatus : MonoBehaviour {
     public int curr_health;
     public int max_health;
     public int health_recover_speed = 0;

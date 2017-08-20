@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class YiMovementController : MonoBehaviour {
+public class YijoMovementController : MonoBehaviour {
      
     #region internal types
 

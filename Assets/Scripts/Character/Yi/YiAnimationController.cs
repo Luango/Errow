@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class YiAnimationController : MonoBehaviour
+public class AnimationController : MonoBehaviour
 {
     // movement config
     public float gravity = -25f;
@@ -83,8 +83,6 @@ public class YiAnimationController : MonoBehaviour
             _velocity.y = 0;
             isAirJumped = false;
             inAirTime = 0.3f;
-            _anim.SetBool("Grounded", true);
-            _anim.SetBool("Jump", false);
         }
         if (Input.GetKey("d"))
         {
@@ -97,9 +95,7 @@ public class YiAnimationController : MonoBehaviour
             {
                 //_animator.Play( Animator.StringToHash( "Run" ) );
 
-                float h = Input.GetAxis("Horizontal") / 3f;
-                _anim.SetFloat("Speed", Mathf.Abs(h));
-                _anim.SetBool("Jump", false);
+                float h = Input.GetAxis("Horizontal") / 3f; 
             }
         }
         else if (Input.GetKey("a"))
@@ -108,40 +104,31 @@ public class YiAnimationController : MonoBehaviour
             normalizedHorizontalSpeed = -1;
             if (transform.localScale.x > 0f)
             {
-                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
             if (_controller.isGrounded) {
                 //_anim.Play( Animator.StringToHash("Run") );
 
-                float h = Input.GetAxis("Horizontal");
-                _anim.SetFloat("Speed", Mathf.Abs(h));
-                _anim.SetBool("Jump", false);
+                float h = Input.GetAxis("Horizontal"); 
             }
         }
         else
         {
             normalizedHorizontalSpeed = 0;
             if (_controller.isGrounded)
-            {
-                _anim.SetBool("Grounded", true);
-                _anim.SetFloat("Speed", Mathf.Abs(0f));
-                _anim.SetBool("Jump", false);
+            { 
             }
         }
 
         // we can only jump whilst grounded
         if ((_controller.isGrounded || inAirTime > 0f)  && Input.GetButton("Jump") && isAirJumped == false)
 		{
-			_velocity.y = Mathf.Sqrt(0.8f * jumpHeight * -gravity );
-            //_anim.Play( Animator.StringToHash( "Jump" ) );
-            _anim.SetBool("Jump", true);
+			_velocity.y = Mathf.Sqrt(0.8f * jumpHeight * -gravity ); 
             inAirTime -= Time.deltaTime;
         }
         if(!_controller.isGrounded && Input.GetKeyDown("w") && isAirJumped == false)
         {
-            _velocity.y = Mathf.Sqrt(1.5f * jumpHeight * -gravity);
-            //_anim.Play( Animator.StringToHash( "Jump" ) );
-            _anim.SetBool("Jump", true);
+            _velocity.y = Mathf.Sqrt(1.5f * jumpHeight * -gravity); 
             isAirJumped = true;
         }
 
@@ -172,11 +159,13 @@ public class YiAnimationController : MonoBehaviour
 
     void Flip()
     {
+        /*
         facingRight = !facingRight;
 
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+        */
     }
 
     void LookAtCursor()
