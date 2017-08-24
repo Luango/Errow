@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 public class Clock : MonoBehaviour {
+    public GameObject EducationBullet;
     private Transform MinutesPointer;
     private Transform HoursPointer;
 
@@ -25,8 +26,27 @@ public class Clock : MonoBehaviour {
     {
         float RandomMin = Random.Range(-180f, 180f);
         float RandomHour = Random.Range(-180f, 180f);
+        
+        MinutesPointer.DORotate(new Vector3(0f, 0f, RandomMin), Random.Range(0.2f, 0.5f)).OnComplete(()=>
+        {
+            // Shoot dead line bullet.
+            print("Rotate Completed");
+            Transform MinTop = transform.Find("MinutesPointer/MinTop");
 
-        MinutesPointer.DORotate(new Vector3(0f, 0f, RandomMin), Random.Range(2f, 5f));
-        HoursPointer.DORotate(new Vector3(0f, 0f, RandomHour), Random.Range(2f, 5f));
+            if (EducationBullet != null) {
+                GameObject bullet = Instantiate(EducationBullet, MinTop.position, Quaternion.Euler(0f, 0f, RandomMin));
+            }
+
+        });
+        HoursPointer.DORotate(new Vector3(0f, 0f, RandomHour), Random.Range(0.2f, 0.5f)).OnComplete(()=>
+        {
+            // Shoot dead line bullet.
+            print("Rotate Completed");
+            Transform HourTop = transform.Find("HoursPointer/HourTop");
+            if (EducationBullet != null)
+            {
+                GameObject bullet = Instantiate(EducationBullet, HourTop.position, Quaternion.Euler(0f, 0f, RandomHour));
+            }
+        });
     }
 }
