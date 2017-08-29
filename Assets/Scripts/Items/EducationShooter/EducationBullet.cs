@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EducationBullet : MonoBehaviour {
+    private float LifeSpan = 10f;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("hi collision");
-        print(collision.tag);
-        if (collision.tag == "Player" || collision.tag == "Others")
-        {
-            print("hi player");
-            Destroy(this.gameObject);
-        }
         if (collision.tag == "People")
         {
-            SpriteSlicer2D.ExplodeSprite(collision.GetComponent<Rigidbody2D>().gameObject, 5, 15.0f, true, ref SpriteSlicer2DDemoManager.m_SlicedSpriteInfo);
+            SpriteSlicer2D.ExplodeSprite(collision.GetComponent<Rigidbody2D>().gameObject, 5, 25.0f, true, ref SpriteSlicer2DDemoManager.m_SlicedSpriteInfo);
             // If we've chosen to fade out fragments once an object is destroyed, add a fade and destroy component
             for (int spriteIndex = 0; spriteIndex < SpriteSlicer2DDemoManager.m_SlicedSpriteInfo.Count; spriteIndex++)
             {
@@ -41,7 +35,11 @@ public class EducationBullet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        LifeSpan -= Time.deltaTime;
+        if (LifeSpan < 0f)
+        {
+            Destroy(this.gameObject);
+        }
 	}
 
     private void FixedUpdate()
