@@ -8,29 +8,30 @@ public class MusicManager : MonoBehaviour {
 	public GameObject musicNoteGameObject;
 
 	void Start () {
-		readSheetCreateNotes ();
+		ReadSheetCreateNotes ();
 	}
 
-	void readSheetCreateNotes() { 
+	void ReadSheetCreateNotes() { 
 		string[] linesInFile = sheetMusic.text.Split('\n');
 		int lineNo = 0;
 		foreach (string line in linesInFile)
 		{
-			Vector3 position = calculateNotePosition(lineNo);
+			Vector3 position = CalculateNotePosition(lineNo);
 
 			string[] notesInLine = line.Split (new char[0]);
 			foreach (string note in notesInLine) {
-				createMusicNote (note, position);
+				CreateMusicNote (note, position);
 			}
 			lineNo++;
 		}
 	}
 
-	void createMusicNote(string noteName, Vector3 position){
+	void CreateMusicNote(string noteName, Vector3 position){
 		// find the gameobj with the note name
-		GameObject musicNote = GameObject.Find(noteName);
-		if (musicNote != null&&musicNote.tag != "MusicPlanet") {
-			GameObject musicCylinder = musicNote.transform.Find ("musicCylinder").gameObject;
+		GameObject musicNote = GameObject.Find(noteName); 
+        if (musicNote != null)
+        {
+            GameObject musicCylinder = musicNote.transform.Find ("musicCylinder").gameObject;
 			// create a note on that position (on cylinder)
 			if (musicCylinder != null) {
 				Vector3 musicNotePosition = musicCylinder.transform.position + position;
@@ -41,7 +42,7 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	// Calculate nth note's position on the cylinder
-	Vector3 calculateNotePosition(int n){
+	Vector3 CalculateNotePosition(int n){
 		Vector3 position;
 		const float radius = 0.5f;
 		float x = 0f;
@@ -52,7 +53,7 @@ public class MusicManager : MonoBehaviour {
 		startPosition = 1050;
 
 		y = radius * Mathf.Sin (startPosition / 360f - n * deltaTheta);
-		z = radius * Mathf.Cos (startPosition / 360f - n * deltaTheta);
+		x = radius * Mathf.Cos (startPosition / 360f - n * deltaTheta);
 		position = new Vector3 (x, y, z);
 
 		return position;

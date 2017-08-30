@@ -6,7 +6,7 @@ public class MusicNote : MonoBehaviour {
 	public bool isActive;
 
 	void Start () {
-		isActive = false;
+		isActive = true;
 	}
 	public void activeNote(){
 		isActive = true;
