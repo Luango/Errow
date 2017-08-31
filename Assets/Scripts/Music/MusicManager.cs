@@ -52,8 +52,8 @@ public class MusicManager : MonoBehaviour {
 		float startPosition;
 		startPosition = 1050;
 
-		y = radius * Mathf.Sin (startPosition / 360f - n * deltaTheta);
-		x = radius * Mathf.Cos (startPosition / 360f - n * deltaTheta);
+		y = radius * Mathf.Cos (startPosition / 360f - n * deltaTheta);
+		x = radius * Mathf.Sin (startPosition / 360f - n * deltaTheta);
 		position = new Vector3 (x, y, z);
 
 		return position;
