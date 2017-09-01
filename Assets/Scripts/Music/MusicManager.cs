@@ -6,8 +6,10 @@ using System.Collections;
 public class MusicManager : MonoBehaviour {
 	public TextAsset sheetMusic; 
 	public GameObject musicNoteGameObject;
+    public float deltaTheta;
+    public float startPosition;
 
-	void Start () {
+    void Start () {
 		ReadSheetCreateNotes ();
 	}
 
@@ -48,9 +50,6 @@ public class MusicManager : MonoBehaviour {
 		float x = 0f;
 		float y = 0f;
 		float z = 0f; 
-		const float deltaTheta = 3.0f / 360f;
-		float startPosition;
-		startPosition = 1050;
 
 		y = radius * Mathf.Cos (startPosition / 360f - n * deltaTheta);
 		x = radius * Mathf.Sin (startPosition / 360f - n * deltaTheta);
