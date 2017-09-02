@@ -5,7 +5,9 @@ public class MusicBoxMain : MonoBehaviour {
 	private float rotateSpeed;
 	// Use this for initialization
 	void Start () {
-		rotateSpeed = RotateSpeed.rotateSpeed;
+		GameObject musicManager = GameObject.Find("MusicManager");
+        rotateSpeed = musicManager.GetComponent<MusicManager>().rotationSpeed;
+
 	}
 	
 	// Update is called once per frame

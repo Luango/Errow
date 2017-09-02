@@ -8,6 +8,7 @@ public class MusicManager : MonoBehaviour {
 	public GameObject musicNoteGameObject;
     public float deltaTheta;
     public float startPosition;
+    public float rotationSpeed;
 
     void Start () {
 		ReadSheetCreateNotes ();
