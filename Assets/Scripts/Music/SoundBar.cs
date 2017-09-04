@@ -20,7 +20,7 @@ public class SoundBar : MonoBehaviour {
 			}
 			if (other.transform.gameObject.GetComponent<MusicNote> ().isActive)
             {
-                WhiteKey.DOScale(scale * 5f, 0.3f).OnComplete(() => WhiteKey.DOScale(scale, 0.3f));
+                WhiteKey.DOScale(scale * 1.3f, 0.3f).OnComplete(() => WhiteKey.DOScale(scale, 0.3f));
                 note.Play ();
 			}
 		}

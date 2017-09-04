@@ -10,6 +10,7 @@ public class MusicManager : MonoBehaviour {
     public float deltaTheta;
     public float startPosition;
     public float rotationSpeed;
+    static public bool Pause = false;
 
     public List<MusicGroup> MusicGroups; 
      
@@ -34,25 +35,14 @@ public class MusicManager : MonoBehaviour {
     // Needs: 1. Which group, group has same center? 2. Which note? 3. What's radius? 
 	void CreateMusicNote(string noteName, int lineNo){
 		GameObject musicNote = GameObject.Find(noteName);
-        /*
-        if (musicNote != null)
-        {
-            print(musicNote);
-            GameObject parentGroup = (GameObject)musicNote.transform.parent.gameObject;
-            print(parentGroup);
-
-            Vector3 musicNotePosition = parentGroup.transform.position + position;
-            GameObject newNote = (GameObject)Instantiate(musicNoteGameObject, musicNotePosition, Quaternion.identity);
-            newNote.transform.parent = parentGroup.transform;
-        }*/
         
         if (musicNote != null)
         {
-            //float radius = musicNote.GetComponent<>
-
             GameObject musicCylinder = musicNote.transform.Find ("musicCylinder").gameObject;
             float radius = musicCylinder.GetComponent<MusicBoxMain>().radius;
-            Vector3 position = CalculateNotePosition(lineNo, radius);
+            float offset = musicCylinder.transform.parent.gameObject.transform.parent.gameObject.GetComponent<MusicGroup>().orientationOffset;
+            print("Offset: " + offset);
+            Vector3 position = CalculateNotePosition(lineNo, radius, offset);
             if (musicCylinder != null) {
 				Vector3 musicNotePosition = musicCylinder.transform.position + position;
 				GameObject newNote = (GameObject)Instantiate (musicNoteGameObject, musicNotePosition, Quaternion.identity);
@@ -61,14 +51,14 @@ public class MusicManager : MonoBehaviour {
 		}
     }
     
-	Vector3 CalculateNotePosition(int n, float radius){
+	Vector3 CalculateNotePosition(int n, float radius, float offset){
 		Vector3 position;
 		float x = 0f;
 		float y = 0f;
 		float z = 0f; 
 
-		y = radius * Mathf.Cos (startPosition / 360f - n * deltaTheta);
-		x = radius * Mathf.Sin (startPosition / 360f - n * deltaTheta);
+		y = radius * Mathf.Cos (Mathf.PI * (startPosition + offset) / 180f - n * deltaTheta);
+		x = radius * Mathf.Sin (Mathf.PI * (startPosition + offset) / 180f - n * deltaTheta);
 		position = new Vector3 (x, y, z);
 
 		return position;
