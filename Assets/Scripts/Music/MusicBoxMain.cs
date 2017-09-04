@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MusicBoxMain : MonoBehaviour {
 	private float rotateSpeed;
+    public float radius;
 	// Use this for initialization
 	void Start () {
 		GameObject musicManager = GameObject.Find("MusicManager");
@@ -13,6 +14,5 @@ public class MusicBoxMain : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		transform.Rotate(Vector3.up * Time.deltaTime * rotateSpeed);
-
 	}
 }

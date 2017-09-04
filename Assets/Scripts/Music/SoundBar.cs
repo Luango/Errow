@@ -1,22 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class SoundBar : MonoBehaviour {
 	public AudioSource note;
-	public GameObject hitParticle;
+    private Transform WhiteKey;
+    private Vector3 scale;
 
-	void OnTriggerEnter2D(Collider2D other)
+    private void Awake()
     {
-        print("Music Note Outside");
+        WhiteKey = transform.GetChild(0);
+        scale = WhiteKey.transform.localScale;
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
         if (other.transform.tag == "MusicNote")
         {
-            print("Music Note");
             if (this.tag == "PlanetMusicBar"&&other.gameObject.GetComponent<MusicNote>().isActive==true) {
-				GameObject newHitParticle = (GameObject)Instantiate (hitParticle, other.transform.position, Quaternion.identity);
-				Destroy (newHitParticle, 3f);
 			}
-			if (other.transform.gameObject.GetComponent<MusicNote> ().isActive) {
-				note.Play ();
+			if (other.transform.gameObject.GetComponent<MusicNote> ().isActive)
+            {
+                WhiteKey.DOScale(scale * 5f, 0.3f).OnComplete(() => WhiteKey.DOScale(scale, 0.3f));
+                note.Play ();
 			}
 		}
 	}

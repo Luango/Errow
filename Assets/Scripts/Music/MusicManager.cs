@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using System.IO;
 using System.Collections;
 
@@ -10,6 +11,8 @@ public class MusicManager : MonoBehaviour {
     public float startPosition;
     public float rotationSpeed;
 
+    public List<MusicGroup> MusicGroups; 
+     
     void Start () {
 		ReadSheetCreateNotes ();
 	}
@@ -19,35 +22,47 @@ public class MusicManager : MonoBehaviour {
 		int lineNo = 0;
 		foreach (string line in linesInFile)
 		{
-			Vector3 position = CalculateNotePosition(lineNo);
-
 			string[] notesInLine = line.Split (new char[0]);
+
 			foreach (string note in notesInLine) {
-				CreateMusicNote (note, position);
+				CreateMusicNote (note, lineNo);
 			}
 			lineNo++;
 		}
 	}
 
-	void CreateMusicNote(string noteName, Vector3 position){
-		// find the gameobj with the note name
-		GameObject musicNote = GameObject.Find(noteName); 
+    // Needs: 1. Which group, group has same center? 2. Which note? 3. What's radius? 
+	void CreateMusicNote(string noteName, int lineNo){
+		GameObject musicNote = GameObject.Find(noteName);
+        /*
         if (musicNote != null)
         {
+            print(musicNote);
+            GameObject parentGroup = (GameObject)musicNote.transform.parent.gameObject;
+            print(parentGroup);
+
+            Vector3 musicNotePosition = parentGroup.transform.position + position;
+            GameObject newNote = (GameObject)Instantiate(musicNoteGameObject, musicNotePosition, Quaternion.identity);
+            newNote.transform.parent = parentGroup.transform;
+        }*/
+        
+        if (musicNote != null)
+        {
+            //float radius = musicNote.GetComponent<>
+
             GameObject musicCylinder = musicNote.transform.Find ("musicCylinder").gameObject;
-			// create a note on that position (on cylinder)
-			if (musicCylinder != null) {
+            float radius = musicCylinder.GetComponent<MusicBoxMain>().radius;
+            Vector3 position = CalculateNotePosition(lineNo, radius);
+            if (musicCylinder != null) {
 				Vector3 musicNotePosition = musicCylinder.transform.position + position;
 				GameObject newNote = (GameObject)Instantiate (musicNoteGameObject, musicNotePosition, Quaternion.identity);
 				newNote.transform.parent = musicCylinder.transform;
 			}
 		}
-	}
-
-	// Calculate nth note's position on the cylinder
-	Vector3 CalculateNotePosition(int n){
+    }
+    
+	Vector3 CalculateNotePosition(int n, float radius){
 		Vector3 position;
-		const float radius = 0.5f;
 		float x = 0f;
 		float y = 0f;
 		float z = 0f; 
