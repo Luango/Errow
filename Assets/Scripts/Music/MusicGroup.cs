@@ -13,7 +13,10 @@ public class MusicGroup : MonoBehaviour{
         MusicManager.Pause = true;
         foreach (Transform note in MusicNotes)
         {
-            note.DORotate(note.eulerAngles + new Vector3(90f, 0f, 0f), 0.8f).OnComplete(() => MusicManager.Pause = false);
+            var rotation = note.rotation;
+            rotation *= Quaternion.Euler(0, 180, 0);
+            //note.DORotate(note.eulerAngles + new Vector3(90f, 0f, 0f), 0.8f).OnComplete(() => MusicManager.Pause = false);
+            note.DORotate(rotation.eulerAngles, 0.8f).OnComplete(() => MusicManager.Pause = false);
         }
     }
 }
