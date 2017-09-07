@@ -10,6 +10,7 @@ public class MusicManager : MonoBehaviour {
     public float deltaTheta;
     public float startPosition;
     public float rotationSpeed;
+    public float buttonRotation;
     static public bool Pause = false;
 
     public List<MusicGroup> MusicGroups; 
@@ -55,7 +56,7 @@ public class MusicManager : MonoBehaviour {
 		Vector3 position;
 		float x = 0f;
 		float y = 0f;
-		float z = 0f; 
+		float z = 0f;
 
 		y = radius * Mathf.Cos (Mathf.PI * (startPosition + offset) / 180f - n * deltaTheta);
 		x = radius * Mathf.Sin (Mathf.PI * (startPosition + offset) / 180f - n * deltaTheta);
