@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EducationBullet : MonoBehaviour {
     private float LifeSpan = 10f;
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "People")
@@ -26,6 +27,19 @@ public class EducationBullet : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
+    private void FearInfluenceRadius(Vector2 center, float radius)
+    {
+        Collider2D[] fearbleColliders = Physics2D.OverlapCircleAll(center, radius);
+        foreach (Collider2D collider in fearbleColliders)
+        {
+            if (collider.tag == "People")
+            {
+                print("Feared people");
+                collider.gameObject.GetComponent<PeopleFear>().Trembling();
+            }
+        }
+    }
+
     private float BulletSpeed = 30f;
 
     // Use this for initialization
@@ -40,7 +54,9 @@ public class EducationBullet : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
-	}
+        FearInfluenceRadius(new Vector2(transform.position.x, transform.position.y), 4f);
+
+    }
 
     private void FixedUpdate()
     {

@@ -5,23 +5,12 @@ using DG.Tweening;
 
 public class PeopleFear : MonoBehaviour {
     private bool trembled = false;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public void Trembling()
+    {
         if (!trembled)
         {
             trembled = true;
-            Trembling();
-        }	
-	}
-
-    private void Trembling()
-    {
-        this.transform.DOShakeScale(5f, 0.1f, 10, 90f, true);
+            this.transform.DOShakeScale(3f, 0.1f, 10, 90f, true).OnComplete( ()=> trembled = false );
+        }
     }
-
 }
