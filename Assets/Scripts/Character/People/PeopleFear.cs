@@ -10,7 +10,7 @@ public class PeopleFear : MonoBehaviour {
         if (!trembled)
         {
             trembled = true;
-            this.transform.DOShakeScale(3f, 0.1f, 10, 90f, true).OnComplete( ()=> trembled = false );
+            //this.transform.DOShakeScale(3f, 0.1f, 3, 30f, true).OnComplete( () => trembled = false );
         }
     }
 }

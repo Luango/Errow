@@ -11,10 +11,8 @@ public class MusicBoxMain : MonoBehaviour {
 	void Start () {
 		GameObject musicManager = GameObject.Find("MusicManager");
         rotateSpeed = musicManager.GetComponent<MusicManager>().rotationSpeed;
-	}
+	} 
 
-
-	 
 	void FixedUpdate () {
         if (!MusicManager.Pause)
         { 

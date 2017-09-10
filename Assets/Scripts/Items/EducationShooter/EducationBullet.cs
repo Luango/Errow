@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class EducationBullet : MonoBehaviour {
     private float LifeSpan = 10f;
-    
+ 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "People")
         {
+            print("Trigger people!");
             SpriteSlicer2D.ExplodeSprite(collision.GetComponent<Rigidbody2D>().gameObject, 5, 25.0f, true, ref SpriteSlicer2DDemoManager.m_SlicedSpriteInfo);
             // If we've chosen to fade out fragments once an object is destroyed, add a fade and destroy component
             for (int spriteIndex = 0; spriteIndex < SpriteSlicer2DDemoManager.m_SlicedSpriteInfo.Count; spriteIndex++)
@@ -34,8 +35,7 @@ public class EducationBullet : MonoBehaviour {
         {
             if (collider.tag == "People")
             {
-                print("Feared people");
-                collider.gameObject.GetComponent<PeopleFear>().Trembling();
+                //collider.gameObject.GetComponent<PeopleFear>().Trembling();
             }
         }
     }
@@ -54,8 +54,7 @@ public class EducationBullet : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
-        FearInfluenceRadius(new Vector2(transform.position.x, transform.position.y), 4f);
-
+        FearInfluenceRadius(new Vector2(transform.position.x, transform.position.y), 2.5f);
     }
 
     private void FixedUpdate()
