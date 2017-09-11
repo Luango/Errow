@@ -72,7 +72,6 @@ public class Clock : MonoBehaviour {
             print("Rotate angle = " + rotateAngle);
             if (TargetPosition.x < 0f)
             {
-                //rotateAngle = -360f - rotateAngle;
                 rotateAngle = -rotateAngle;
             }
              

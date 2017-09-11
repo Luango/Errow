@@ -13,11 +13,38 @@ public class MusicManager : MonoBehaviour {
     public float buttonRotation;
     static public bool Pause = false;
 
+    private bool Completed = false;
+    public GameObject FirstNote;
+    public GameObject LastNote;
+    public List<int> Answer;
+    public List<int> CurrAnswer;
+    public List<GameObject> Switchs;
+
     public List<MusicGroup> MusicGroups; 
+     
      
     void Start () {
 		ReadSheetCreateNotes ();
 	}
+    private void Update()
+    {
+        if (CheckAnswer()&&Completed==false)
+        {
+            Completed = true;
+            print("Solved");
+        }
+    }
+
+    private bool CheckAnswer ()
+    {
+        for (int i =0; i < Answer.Count; i++)
+        {
+            if ((Answer[i] - CurrAnswer[i]) % 360 != 0)
+                return false;
+        }
+        print("Solved");
+        return true;
+    }
 
 	void ReadSheetCreateNotes() { 
 		string[] linesInFile = sheetMusic.text.Split('\n');
@@ -32,8 +59,7 @@ public class MusicManager : MonoBehaviour {
 			lineNo++;
 		}
 	}
-
-    // Needs: 1. Which group, group has same center? 2. Which note? 3. What's radius? 
+    
 	void CreateMusicNote(string noteName, int lineNo){
 		GameObject musicNote = GameObject.Find(noteName);
         
