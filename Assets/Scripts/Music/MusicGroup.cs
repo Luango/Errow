@@ -12,8 +12,9 @@ public class MusicGroup : MonoBehaviour{
     {
         if (MusicManager.Pause == false)
         {
-            float buttonRotateAngle = GameObject.Find("MusicManager").GetComponent<MusicManager>().buttonRotation;
+            float buttonRotateAngle = MusicManager.Instance.buttonRotation;
             MusicManager.Pause = true;
+            orientationOffset -= MusicManager.Instance.buttonRotation;
             foreach (Transform note in MusicNotes)
             {
                 var rotation = note.rotation;

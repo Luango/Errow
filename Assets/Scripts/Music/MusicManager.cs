@@ -5,7 +5,7 @@ using System.Collections;
 
 // Create music notes on the musical cylinder from sheet music
 public class MusicManager : MonoBehaviour {
-	public TextAsset sheetMusic; 
+	public TextAsset sheetMusic;
 	public GameObject musicNoteGameObject;
     public float deltaTheta;
     public float startPosition;
@@ -16,31 +16,55 @@ public class MusicManager : MonoBehaviour {
     private bool Completed = false;
     public GameObject FirstNote;
     public GameObject LastNote;
-    public List<int> Answer;
-    public List<int> CurrAnswer;
-    public List<GameObject> Switchs;
+    public List<int> Answers;
+    public List<int> CurrAnswers;
 
-    public List<MusicGroup> MusicGroups; 
-     
-     
+    public List<GameObject> Groups;
+
+    private static MusicManager instance = null;
+    
+    public static MusicManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Start () {
 		ReadSheetCreateNotes ();
 	}
     private void Update()
     {
-        if (CheckAnswer()&&Completed==false)
+        if (Completed==false)
         {
-            Completed = true;
-            print("Solved");
+            if (CheckAnswer())
+            {
+                Completed = true;
+            }
         }
     }
 
     private bool CheckAnswer ()
     {
-        for (int i =0; i < Answer.Count; i++)
+        for (int i =0; i < Answers.Count; i++)
         {
-            if ((Answer[i] - CurrAnswer[i]) % 360 != 0)
+            CurrAnswers[i] = (int)Groups[i].GetComponent<MusicGroup>().orientationOffset; 
+            if ((Answers[i] - CurrAnswers[i]) % 360 != 0)
+            { 
                 return false;
+            }
         }
         print("Solved");
         return true;
@@ -68,7 +92,7 @@ public class MusicManager : MonoBehaviour {
             GameObject musicCylinder = musicNote.transform.Find ("musicCylinder").gameObject;
             float radius = musicCylinder.GetComponent<MusicBoxMain>().radius;
             float offset = musicCylinder.transform.parent.gameObject.transform.parent.gameObject.GetComponent<MusicGroup>().orientationOffset;
-            print("Offset: " + offset);
+            
             Vector3 position = CalculateNotePosition(lineNo, radius, offset);
             if (musicCylinder != null) {
 				Vector3 musicNotePosition = musicCylinder.transform.position + position;

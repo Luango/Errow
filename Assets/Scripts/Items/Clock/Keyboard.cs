@@ -6,6 +6,7 @@ using DG.Tweening;
 public class Keyboard : MonoBehaviour {
     private bool canPress = true;
     private bool completed = true;
+
 	public void ButtonPressed()
     {
         if (canPress == true && completed == true)
