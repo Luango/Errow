@@ -14,8 +14,8 @@ public class MusicManager : MonoBehaviour {
     static public bool Pause = false;
 
     private bool Completed = false;
-    public GameObject FirstNote;
-    public GameObject LastNote;
+    private GameObject FirstNote;
+    private GameObject LastNote;
     public List<int> Answers;
     public List<int> CurrAnswers;
 
