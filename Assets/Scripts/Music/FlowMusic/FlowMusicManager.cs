@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class FlowMusicManager : MonoBehaviour { 
     public TextAsset sheetMusic;
-    public float deltaTime;
+    private float deltaTime;
+    public float DeltaTime = 0.05f;
+    //public GameObject musicNoteGameObject;
+    private string[] linesInFile;
+    private int lineNo = 0;
 
     private static FlowMusicManager instance = null;
     public static FlowMusicManager Instance
@@ -24,6 +28,15 @@ public class FlowMusicManager : MonoBehaviour {
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
+
+        if(sheetMusic != null)
+        {
+            linesInFile = sheetMusic.text.Split('\n');
+        }
+        else
+        {
+            print("No sheet music!");
+        }
     }
 
     // Use this for initialization
@@ -33,8 +46,34 @@ public class FlowMusicManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+    //    deltaTime -= Time.deltaTime;
 	}
+
+    private void FixedUpdate()
+    {
+        deltaTime -= Time.deltaTime;  
+        if(deltaTime < 0f)
+        {
+            if (lineNo < linesInFile.Length)
+            { 
+                deltaTime = DeltaTime;
+                string[] notesInLine = linesInFile[lineNo].Split(new char[0]);
+
+                foreach (string note in notesInLine)
+                {
+                    GameObject musicNote = GameObject.Find(note);
+                    if (musicNote != null)
+                    {
+                        print(musicNote);
+                        GameObject noteObj = (GameObject)Instantiate(musicNote, new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), Random.Range(-5f, 5f)), Quaternion.identity);
+                        noteObj.GetComponent<AudioSource>().enabled = true;
+                        noteObj.GetComponent<SpriteRenderer>().enabled = true;
+                    }
+                }
+            }
+            lineNo++;
+        }
+    }
 
     void NextLine()
     {
@@ -54,6 +93,16 @@ public class FlowMusicManager : MonoBehaviour {
 
             }
             lineNo++;
+        }
+    }
+
+    void CreateMusicNote(string noteName, int lineNo)
+    {
+        GameObject musicNote = GameObject.Find(noteName);
+
+        if (musicNote != null)
+        { 
+
         }
     }
 }
