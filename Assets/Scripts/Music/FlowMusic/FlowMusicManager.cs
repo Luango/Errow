@@ -5,7 +5,7 @@ using UnityEngine;
 public class FlowMusicManager : MonoBehaviour { 
     public TextAsset sheetMusic;
     private float deltaTime;
-    public float DeltaTime = 0.05f;
+    public float DeltaTime;
     //public GameObject musicNoteGameObject;
     private string[] linesInFile;
     private int lineNo = 0;
@@ -65,9 +65,10 @@ public class FlowMusicManager : MonoBehaviour {
                     if (musicNote != null)
                     {
                         print(musicNote);
-                        GameObject noteObj = (GameObject)Instantiate(musicNote, new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), Random.Range(-5f, 5f)), Quaternion.identity);
+                        GameObject noteObj = (GameObject)Instantiate(musicNote, FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-3f, 15f) + 6f, Random.Range(-10f, 10f), 0f), Quaternion.identity);
                         noteObj.GetComponent<AudioSource>().enabled = true;
                         noteObj.GetComponent<SpriteRenderer>().enabled = true;
+                        noteObj.GetComponent<FlowMusicNote>().enabled = true;
                     }
                 }
             }
