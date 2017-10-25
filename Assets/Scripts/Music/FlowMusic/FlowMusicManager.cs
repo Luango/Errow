@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class FlowMusicManager : MonoBehaviour { 
     public TextAsset sheetMusic;
-    private float deltaTime;
     public float DeltaTime;
-    //public GameObject musicNoteGameObject;
+    private float deltaTime;
     private string[] linesInFile;
     private int lineNo = 0;
-
+    private Vector3 prePos;
+    private int stepsCount;
+    private float stepSize = 0.01f;
     private static FlowMusicManager instance = null;
+
     public static FlowMusicManager Instance
     {
         get
@@ -41,13 +43,9 @@ public class FlowMusicManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-    //    deltaTime -= Time.deltaTime;
-	}
+        prePos = FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-15f, 15f), Random.Range(-15f, 15f), 0f);
+        stepsCount = 0;
+    }
 
     private void FixedUpdate()
     {
@@ -55,30 +53,29 @@ public class FlowMusicManager : MonoBehaviour {
         if(deltaTime < 0f)
         {
             if (lineNo < linesInFile.Length)
-            { 
+            {
                 deltaTime = DeltaTime;
                 string[] notesInLine = linesInFile[lineNo].Split(new char[0]);
 
                 foreach (string note in notesInLine)
                 {
                     GameObject musicNote = GameObject.Find(note);
+                    stepsCount++;
                     if (musicNote != null)
                     {
                         print(musicNote);
-                        GameObject noteObj = (GameObject)Instantiate(musicNote, FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-3f, 15f) + 6f, Random.Range(-10f, 10f), 0f), Quaternion.identity);
+                        Vector3 newPos = prePos + new Vector3(Random.Range(-15f, 15f)*stepSize*stepsCount, Random.Range(-15f, 15f) * stepSize * stepsCount, 0f);
+                        GameObject noteObj = (GameObject)Instantiate(musicNote, newPos, Quaternion.identity);
                         noteObj.GetComponent<AudioSource>().enabled = true;
                         noteObj.GetComponent<SpriteRenderer>().enabled = true;
                         noteObj.GetComponent<FlowMusicNote>().enabled = true;
+                        prePos = newPos;
+                        stepsCount = 0;
                     }
                 }
             }
             lineNo++;
         }
-    }
-
-    void NextLine()
-    {
-
     }
 
     void ReadSheetCreateNotes()
@@ -87,23 +84,8 @@ public class FlowMusicManager : MonoBehaviour {
         int lineNo = 0;
         foreach (string line in linesInFile)
         {
-            string[] notesInLine = line.Split(new char[0]);
-
-            foreach (string note in notesInLine)
-            { 
-
-            }
+            string[] notesInLine = line.Split(new char[0]);       
             lineNo++;
-        }
-    }
-
-    void CreateMusicNote(string noteName, int lineNo)
-    {
-        GameObject musicNote = GameObject.Find(noteName);
-
-        if (musicNote != null)
-        { 
-
         }
     }
 }

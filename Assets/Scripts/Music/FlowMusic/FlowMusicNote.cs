@@ -20,14 +20,14 @@ public class FlowMusicNote : MonoBehaviour {
 	void Start () {
         noteSound = gameObject.GetComponent<AudioSource>();
         noteSound.clip = keySound;
-        this.transform.localScale = new Vector3(1f, 1f, 1f);
+        this.transform.localScale = new Vector3(0f, 0f, 1f);
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (!isShrinking)
         {
-            this.transform.DOScale(new Vector3(3f, 3f, 1f), lifeSpan);
+            this.transform.DOScale(new Vector3(1f, 1f, 1f), lifeSpan);
         }
 	}
 
@@ -47,7 +47,7 @@ public class FlowMusicNote : MonoBehaviour {
             if (!isShrinking)
             {
                 isShrinking = true;
-                this.transform.DOScale(new Vector3(0.01f, 0.01f, 1f), 0.3f);
+                this.transform.DOScale(new Vector3(0.0f, 0.0f, 1f), 0.3f);
             }
         }
         else if(lifeSpan <= -1f)
