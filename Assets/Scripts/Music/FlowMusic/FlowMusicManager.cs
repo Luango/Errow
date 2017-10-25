@@ -10,7 +10,7 @@ public class FlowMusicManager : MonoBehaviour {
     private int lineNo = 0;
     private Vector3 prePos;
     private int stepsCount;
-    private float stepSize = 0.01f;
+    private float stepSize = 0.05f;
     private static FlowMusicManager instance = null;
 
     public static FlowMusicManager Instance
@@ -52,19 +52,24 @@ public class FlowMusicManager : MonoBehaviour {
         deltaTime -= Time.deltaTime;  
         if(deltaTime < 0f)
         {
+            print(lineNo);
             if (lineNo < linesInFile.Length)
             {
+                
                 deltaTime = DeltaTime;
                 string[] notesInLine = linesInFile[lineNo].Split(new char[0]);
 
                 foreach (string note in notesInLine)
                 {
                     GameObject musicNote = GameObject.Find(note);
-                    stepsCount++;
+                    if (stepsCount < 30)
+                    {
+                        stepsCount++;
+                    }
                     if (musicNote != null)
                     {
                         print(musicNote);
-                        Vector3 newPos = prePos + new Vector3(Random.Range(-15f, 15f)*stepSize*stepsCount, Random.Range(-15f, 15f) * stepSize * stepsCount, 0f);
+                        Vector3 newPos = prePos + new Vector3(Random.Range(-8f, 8f)*stepSize*stepsCount, Random.Range(-8f, 8f) * stepSize * stepsCount, 0f);
                         GameObject noteObj = (GameObject)Instantiate(musicNote, newPos, Quaternion.identity);
                         noteObj.GetComponent<AudioSource>().enabled = true;
                         noteObj.GetComponent<SpriteRenderer>().enabled = true;
