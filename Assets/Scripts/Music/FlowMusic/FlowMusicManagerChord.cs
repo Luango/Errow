@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlowMusicManager : MonoBehaviour { 
+public class FlowMusicManagerChord : MonoBehaviour { 
     public TextAsset sheetMusic;
     public float DeltaTime;
     private float deltaTime;
     private string[] linesInFile;
     private int lineNo = 0;
-    private Vector3 prePos;
-    private int stepsCount;
-    private float stepSize = 0.035f;
-    private static FlowMusicManager instance = null;
+    private static FlowMusicManagerChord instance = null;
 
-    public static FlowMusicManager Instance
+    public static FlowMusicManagerChord Instance
     {
         get
         {
@@ -42,9 +39,7 @@ public class FlowMusicManager : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
-        prePos = FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-15f, 15f), Random.Range(-15f, 15f), 0f);
-        stepsCount = 0;
+    void Start () { 
     }
 
     private void FixedUpdate()
@@ -62,20 +57,12 @@ public class FlowMusicManager : MonoBehaviour {
                 foreach (string note in notesInLine)
                 {
                     GameObject musicNote = GameObject.Find(note);
-                    if (stepsCount < 30)
-                    {
-                        stepsCount++;
-                    }
                     if (musicNote != null)
                     {
-                        print(musicNote);
-                        Vector3 newPos = prePos + new Vector3(Random.Range(-8f, 8f)*stepSize*stepsCount, Random.Range(-8f, 8f) * stepSize * stepsCount, 0f);
-                        GameObject noteObj = (GameObject)Instantiate(musicNote, newPos, Quaternion.identity);
+                        print(musicNote);  GameObject noteObj = (GameObject)Instantiate(musicNote, FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-15f, 15f), Random.Range(-15f, 15f), 0f), Quaternion.identity);
                         noteObj.GetComponent<AudioSource>().enabled = true;
                         noteObj.GetComponent<SpriteRenderer>().enabled = true;
-                        noteObj.GetComponent<FlowMusicNote>().enabled = true;
-                        prePos = newPos;
-                        stepsCount = 0;
+                        noteObj.GetComponent<FlowMusicNote>().enabled = true;  
                     }
                 }
             }
