@@ -7,7 +7,7 @@ public class FlowMusicManagerChord : MonoBehaviour {
     public float DeltaTime;
     private float deltaTime;
     private string[] linesInFile;
-    private int lineNo = 0;
+    private int lineNo = 700;
     private static FlowMusicManagerChord instance = null;
 
     public static FlowMusicManagerChord Instance
@@ -62,7 +62,7 @@ public class FlowMusicManagerChord : MonoBehaviour {
                         print(musicNote);  GameObject noteObj = (GameObject)Instantiate(musicNote, FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-15f, 15f), Random.Range(-15f, 15f), 0f), Quaternion.identity);
                         noteObj.GetComponent<AudioSource>().enabled = true;
                         noteObj.GetComponent<SpriteRenderer>().enabled = true;
-                        noteObj.GetComponent<FlowMusicNote>().enabled = true;  
+                        noteObj.GetComponent<FlowMusicChordNote>().enabled = true;  
                     }
                 }
             }

@@ -7,10 +7,10 @@ public class FlowMusicManager : MonoBehaviour {
     public float DeltaTime;
     private float deltaTime;
     private string[] linesInFile;
-    private int lineNo = 0;
+    private int lineNo = 700;
     private Vector3 prePos;
     private int stepsCount;
-    private float stepSize = 0.035f;
+    private float stepSize = 0.045f;
     private static FlowMusicManager instance = null;
 
     public static FlowMusicManager Instance

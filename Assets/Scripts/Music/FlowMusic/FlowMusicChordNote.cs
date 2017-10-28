@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class FlowMusicNote : MonoBehaviour {
+public class FlowMusicChordNote : MonoBehaviour {
     private Vector3 iniPosition;
 
     private float lifeSpan = 3.0f;
@@ -27,7 +27,7 @@ public class FlowMusicNote : MonoBehaviour {
 	void Update () {
         if (!isShrinking)
         {
-            this.transform.DOScale(new Vector3(1.80f, 1.80f, 1f), lifeSpan);
+            this.transform.DOScale(new Vector3(0.51f, 0.51f, 0.51f), lifeSpan);
         }
 	}
 
@@ -36,11 +36,8 @@ public class FlowMusicNote : MonoBehaviour {
         lifeSpan -= Time.deltaTime;
         if (lifeSpan < 0f && hasPlayed == false)
         {
-            hasPlayed = true;
-            if (CalculateDistanceFromPlayer() < threshold)
-            {
-                noteSound.Play();
-            }
+            hasPlayed = true; 
+            noteSound.Play(); 
         }
         else if (lifeSpan <= 0f && lifeSpan > -1f)
         {
