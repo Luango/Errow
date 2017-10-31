@@ -7,7 +7,7 @@ public class FlowMusicManagerChord : MonoBehaviour {
     public float DeltaTime;
     private float deltaTime;
     private string[] linesInFile;
-    private int lineNo = 700;
+    private int lineNo = 0;
     private static FlowMusicManagerChord instance = null;
 
     public static FlowMusicManagerChord Instance
