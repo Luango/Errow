@@ -10,7 +10,7 @@ public class FlowMusicManager : MonoBehaviour {
     private int lineNo = 0;
     private Vector3 prePos;
     private int stepsCount;
-    private float stepSize = 0.2f;
+    private float stepSize = 0.27f;
     private static FlowMusicManager instance = null;
     private Vector2 FlowDirection;
 
@@ -65,13 +65,13 @@ public class FlowMusicManager : MonoBehaviour {
                 foreach (string note in notesInLine)
                 {
                     GameObject musicNote = GameObject.Find(note);
-                    if (stepsCount < 30)
+                    if (stepsCount < 80)
                     {
                         stepsCount++;
                     }
                     if (musicNote != null)
                     { 
-                        Vector3 newPos = prePos + new Vector3(FlowDirection.x * stepSize * stepsCount* Random.Range(1f,2.5f), FlowDirection.y * stepSize * stepsCount * Random.Range(1f, 1.5f), 0f);
+                        Vector3 newPos = prePos + new Vector3(FlowDirection.x * stepSize * stepsCount* Random.Range(1f,1.2f), FlowDirection.y * stepSize * stepsCount * Random.Range(1f, 1.5f), 0f);
                         GameObject noteObj = (GameObject)Instantiate(musicNote, newPos, Quaternion.identity);
                         noteObj.GetComponent<AudioSource>().enabled = true;
                         noteObj.GetComponent<SpriteRenderer>().enabled = true;
