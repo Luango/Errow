@@ -20,6 +20,7 @@ public class FlowMusicManagerChord : MonoBehaviour {
      
     private void Awake()
     {
+        deltaTime = 2.7f;
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
@@ -47,7 +48,6 @@ public class FlowMusicManagerChord : MonoBehaviour {
         deltaTime -= Time.deltaTime;  
         if(deltaTime < 0f)
         {
-            print(lineNo);
             if (lineNo < linesInFile.Length)
             {
                 
@@ -59,8 +59,8 @@ public class FlowMusicManagerChord : MonoBehaviour {
                     GameObject musicNote = GameObject.Find(note);
                     if (musicNote != null)
                     {
-                        print(musicNote);  GameObject noteObj = (GameObject)Instantiate(musicNote, FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-15f, 15f), Random.Range(-15f, 15f), 0f), Quaternion.identity);
-                        noteObj.GetComponent<AudioSource>().enabled = true;
+                        GameObject noteObj = (GameObject)Instantiate(musicNote, FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-15f, 15f), Random.Range(-15f, 15f), 0f), Quaternion.identity);
+                        //noteObj.GetComponent<AudioSource>().enabled = true;
                         noteObj.GetComponent<SpriteRenderer>().enabled = true;
                         noteObj.GetComponent<FlowMusicChordNote>().enabled = true;  
                     }

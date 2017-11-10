@@ -9,15 +9,23 @@ public class FlowMusicNote : MonoBehaviour {
     private float lifeSpan = 3.0f;
     private string noteName;
     private float stepSize;
-    private float threshold = 10f;
+    private float threshold = 20f;
 
     private AudioSource noteSound;
     public AudioClip keySound;
     private bool hasPlayed = false;
     private bool isShrinking = false;
+    private int FileID;
+    private int SoundID;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    private void Awake()
+    {
+        FileID = AndroidNativeAudio.load("Piano/" + keySound.name + ".wav");
+
+    }
+    void Start ()
+    {
         noteSound = gameObject.GetComponent<AudioSource>();
         noteSound.clip = keySound;
         this.transform.localScale = new Vector3(0f, 0f, 1f);
@@ -39,7 +47,7 @@ public class FlowMusicNote : MonoBehaviour {
             hasPlayed = true;
             if (CalculateDistanceFromPlayer() < threshold)
             {
-                noteSound.Play();
+                SoundID = AndroidNativeAudio.play(FileID);
             }
         }
         else if (lifeSpan <= 0f && lifeSpan > -1f)

@@ -29,6 +29,7 @@ public class FlowMusicManager : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
+        AndroidNativeAudio.makePool();
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
@@ -55,7 +56,6 @@ public class FlowMusicManager : MonoBehaviour {
         deltaTime -= Time.deltaTime;  
         if(deltaTime < 0f)
         {
-            print(lineNo);
             if (lineNo < linesInFile.Length)
             {
                 
@@ -73,7 +73,7 @@ public class FlowMusicManager : MonoBehaviour {
                     { 
                         Vector3 newPos = prePos + new Vector3(FlowDirection.x * stepSize * stepsCount* Random.Range(1f,1.2f), FlowDirection.y * stepSize * stepsCount * Random.Range(1f, 1.5f), 0f);
                         GameObject noteObj = (GameObject)Instantiate(musicNote, newPos, Quaternion.identity);
-                        noteObj.GetComponent<AudioSource>().enabled = true;
+                        //noteObj.GetComponent<AudioSource>().enabled = true;
                         noteObj.GetComponent<SpriteRenderer>().enabled = true;
                         noteObj.GetComponent<FlowMusicNote>().enabled = true;
                         prePos = newPos;
