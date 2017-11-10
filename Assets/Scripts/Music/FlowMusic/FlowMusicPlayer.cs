@@ -27,7 +27,7 @@ public class FlowMusicPlayer : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        transform.DOScale(5f, 1.608f).SetLoops(-1, LoopType.Yoyo);
+        transform.DOScale(8f, 0.804f).SetLoops(-1, LoopType.Yoyo);
     }
 	
 	// Update is called once per frame

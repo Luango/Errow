@@ -27,7 +27,7 @@ public class FlowMusicNote : MonoBehaviour {
 	void Update () {
         if (!isShrinking)
         {
-            this.transform.DOScale(new Vector3(1.80f, 1.80f, 1f), lifeSpan);
+            this.transform.DOScale(new Vector3(2.30f, 2.30f, 1f), lifeSpan);
         }
 	}
 
