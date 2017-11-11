@@ -6,7 +6,7 @@ using DG.Tweening;
 public class FlowMusicChordNote : MonoBehaviour {
     private Vector3 iniPosition;
 
-    private float lifeSpan = 0.3f;
+    private float lifeSpan = 0.1f;
     private string noteName;
     private float stepSize;
     private float threshold = 10f;
@@ -27,14 +27,7 @@ public class FlowMusicChordNote : MonoBehaviour {
         
         this.transform.localScale = new Vector3(0f, 0f, 1f);
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (!isShrinking)
-        {
-            this.transform.DOScale(new Vector3(0.51f, 0.51f, 0.51f), lifeSpan);
-        }
-	}
+	 
 
     void OnApplicationQuit()
     {
@@ -43,8 +36,13 @@ public class FlowMusicChordNote : MonoBehaviour {
         AndroidNativeAudio.releasePool();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
+        if (!isShrinking)
+        {
+            this.transform.DOScale(new Vector3(0.51f, 0.51f, 0.51f), lifeSpan);
+        }
+
         lifeSpan -= Time.deltaTime;
         if (lifeSpan < 0f && hasPlayed == false)
         {

@@ -77,7 +77,7 @@ public static class AndroidNativeAudio
 	}
 
 
-	public static void makePool(int maxStreams = 16)
+	public static void makePool(int maxStreams = 160)
 	{
 		if (DEBUG)
 			Debug.Log(_logPrefix + "makePool(" + maxStreams + ")");

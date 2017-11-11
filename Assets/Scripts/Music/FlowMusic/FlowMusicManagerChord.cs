@@ -20,7 +20,7 @@ public class FlowMusicManagerChord : MonoBehaviour {
      
     private void Awake()
     {
-        deltaTime = 2.7f;
+        deltaTime = 2.9f;
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
