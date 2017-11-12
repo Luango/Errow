@@ -5,9 +5,11 @@ using UnityEngine;
 using DG.Tweening;
 
 public class FlowMusicPlayer : MonoBehaviour {
-    private float speed = 0.5f;
+    private float speed = 100f;
 
     private static FlowMusicPlayer instance = null;
+    private Rigidbody2D body;
+
     public static FlowMusicPlayer Instance
     {
         get
@@ -27,28 +29,21 @@ public class FlowMusicPlayer : MonoBehaviour {
 
     // Use this for initialization
     void Start () { 
-        transform.DOScale(8f, 0.804f).SetLoops(-1, LoopType.Yoyo);
+        //transform.DOScale(9.5f, 0.804f).SetLoops(-1, LoopType.Yoyo);
+        body = GetComponent<Rigidbody2D>();
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-#if UNITY_STANDALONE || UNITY_WEBPLAYER //|| UNITY_EDITOR
-        Vector2 v = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * speed;
-        transform.position += new Vector3(v.x, v.y, 0f);
-        
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE 
-        /*
-        // if use touch never happen
-        Touch myTouch = Input.GetTouch(0);
-        Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-        Vector2 dir = touchPos - (new Vector2(transform.position.x, transform.position.y));
-        dir.Normalize();
-        transform.position += new Vector3(dir.x*speed, dir.y*speed, 0f);
-        */
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
+        Vector2 v = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")); 
+        body.AddForce(v * speed, ForceMode2D.Force);
 
-        // use accleration control
-        transform.Translate(Input.acceleration.x, Input.acceleration.y, 0);
+#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+        // use accleration control 
+        Vector2 v2 = new Vector2(Input.acceleration.x, Input.acceleration.y);
+        body.AddForce(v2 * speed * 5f, ForceMode2D.Force);
 #endif
     }
 }

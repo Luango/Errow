@@ -10,6 +10,7 @@ public class FlowMusicNote : MonoBehaviour {
     private string noteName;
     private float stepSize;
     private float threshold = 20f;
+    private List<GameObject> Notes;
 
     private AudioSource noteSound;
     public AudioClip keySound;
@@ -22,13 +23,18 @@ public class FlowMusicNote : MonoBehaviour {
     private void Awake()
     {
         FileID = AndroidNativeAudio.load("Piano/" + keySound.name + ".wav");
-
     }
     void Start ()
     {
-        noteSound = gameObject.GetComponent<AudioSource>();
-        noteSound.clip = keySound;
+        //noteSound = gameObject.GetComponent<AudioSource>();
+        //noteSound.clip = keySound;
         this.transform.localScale = new Vector3(0f, 0f, 1f);
+        for (int i = 0; i < 3; i++)
+        {
+            print("i = " + i);
+            GameObject note = Instantiate(Resources.Load("Prefabs/Note") as GameObject, transform.position, Quaternion.Euler(0f, 0f, 120 * i));
+            note.transform.parent = transform;
+        }
     }
 	
 	// Update is called once per frame
