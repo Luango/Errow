@@ -29,11 +29,11 @@ public class FlowMusicNote : MonoBehaviour {
         //noteSound = gameObject.GetComponent<AudioSource>();
         //noteSound.clip = keySound;
         this.transform.localScale = new Vector3(0f, 0f, 1f);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 12; i++)
         {
-            print("i = " + i);
-            GameObject note = Instantiate(Resources.Load("Prefabs/Note") as GameObject, transform.position, Quaternion.Euler(0f, 0f, 120 * i));
+            GameObject note = Instantiate(Resources.Load("Prefabs/Note") as GameObject, transform.position, Quaternion.Euler(0f, 0f, 30 * i));
             note.transform.parent = transform;
+            note.GetComponent<NoteIndicator>().LifeSpan = i * 0.25f + 0.25f;
         }
     }
 	
@@ -41,7 +41,7 @@ public class FlowMusicNote : MonoBehaviour {
 	void Update () {
         if (!isShrinking)
         {
-            this.transform.DOScale(new Vector3(2.30f, 2.30f, 1f), lifeSpan);
+            this.transform.DOScale(new Vector3(4.30f, 4.30f, 1f), lifeSpan);
         }
 	}
 
