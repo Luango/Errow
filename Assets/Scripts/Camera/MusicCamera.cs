@@ -6,6 +6,7 @@ public class MusicCamera : MonoBehaviour {
     public Transform target;
     public float smoothSpeed = 10f;
     public Vector3 offset;
+
 	// Use this for initialization
 	void Start () {
 		

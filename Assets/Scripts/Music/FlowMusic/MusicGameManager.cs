@@ -19,6 +19,7 @@ public class MusicGameManager : MonoBehaviour {
             Destroy(this.gameObject);
         }
         instance = this;
+        AndroidNativeAudio.makePool(150);
         DontDestroyOnLoad(this.gameObject);
     }
 

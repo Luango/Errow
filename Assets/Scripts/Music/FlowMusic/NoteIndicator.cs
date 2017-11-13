@@ -7,8 +7,7 @@ public class NoteIndicator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        LifeSpan -= Time.deltaTime;
-        print("Life Span : " + LifeSpan);
+        LifeSpan -= Time.deltaTime; 
         if (LifeSpan <= 0f)
         {
             Destroy(this.gameObject);

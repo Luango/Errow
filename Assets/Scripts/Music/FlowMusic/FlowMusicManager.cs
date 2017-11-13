@@ -29,7 +29,6 @@ public class FlowMusicManager : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
-        AndroidNativeAudio.makePool(150);
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
