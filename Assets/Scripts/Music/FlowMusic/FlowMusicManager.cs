@@ -41,10 +41,9 @@ public class FlowMusicManager : MonoBehaviour {
             print("No sheet music!");
         }
     }
-
-    // Use this for initialization
+     
     void Start () {
-        prePos = FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-15f, 15f), Random.Range(-15f, 15f), 0f);
+        prePos = FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0f);
         stepsCount = 0;
         FlowDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         FlowDirection.Normalize();
@@ -71,8 +70,7 @@ public class FlowMusicManager : MonoBehaviour {
                     if (musicNote != null)
                     { 
                         Vector3 newPos = prePos + new Vector3(FlowDirection.x * stepSize * stepsCount* Random.Range(1f,1.2f), FlowDirection.y * stepSize * stepsCount * Random.Range(1f, 1.5f), 0f);
-                        GameObject noteObj = (GameObject)Instantiate(musicNote, newPos, Quaternion.identity);
-                        //noteObj.GetComponent<AudioSource>().enabled = true;
+                        GameObject noteObj = (GameObject)Instantiate(musicNote, newPos, Quaternion.identity); 
                         noteObj.GetComponent<SpriteRenderer>().enabled = true;
                         noteObj.GetComponent<FlowMusicNote>().enabled = true;
                         prePos = newPos;
@@ -85,8 +83,7 @@ public class FlowMusicManager : MonoBehaviour {
                             FlowDirection.Normalize();
                         }
                         else
-                        {
-
+                        { 
                             FlowDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                             FlowDirection.Normalize();
                         }

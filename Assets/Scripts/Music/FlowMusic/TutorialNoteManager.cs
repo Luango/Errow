@@ -23,7 +23,7 @@ public class TutorialNoteManager : MonoBehaviour {
             noteObj.GetComponent<FlowMusicNote>().enabled = true;
             noteObj.GetComponent<FlowMusicNote>().keySound = keySound;
 
-            checkLifeSpan = 3.0f;
+            checkLifeSpan = 3.5f;
         }
 	}
 }
