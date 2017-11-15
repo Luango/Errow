@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScrollingBackgroundFourDirections : MonoBehaviour {
     private Transform cameraTransform;
     private Transform[] layers;
-    private float viewZone = 25;
+    private float viewZone = 70;
 
     private int topRowIndex;
     private int bottomRowIndex;
@@ -38,12 +38,12 @@ public class ScrollingBackgroundFourDirections : MonoBehaviour {
             ScrollRight();
         }
 
-        if (cameraTransform.position.y > (layers[topRowIndex].transform.position.y))
+        if (cameraTransform.position.y > (layers[topRowIndex].transform.position.y - viewZone/2f))
         {
             ScrollUp();
         }
 
-        if (cameraTransform.position.y < (layers[bottomRowIndex*3].transform.position.y))
+        if (cameraTransform.position.y < (layers[bottomRowIndex*3].transform.position.y + viewZone/2f))
         {
             ScrollDown();
         }
