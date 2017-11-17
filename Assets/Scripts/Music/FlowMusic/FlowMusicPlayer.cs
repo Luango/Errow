@@ -34,19 +34,27 @@ public class FlowMusicPlayer : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 #if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
-        Vector2 v = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")); 
-        body.AddForce(v * speed, ForceMode2D.Force);
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            Vector2 v = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        float angle = Vector2.Angle(transform.forward, v);
-        transform.Rotate(Vector3.forward, Time.deltaTime * 50f);
+            float angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime*2f);
+            body.AddForce(v * speed, ForceMode2D.Force);
+        }
           
 #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
         // use accleration control 
         Vector2 v2 = new Vector2(Input.acceleration.x, Input.acceleration.y); 
-        body.AddForce(v2 * speed * 5f, ForceMode2D.Force); 
+        body.AddForce(v2 * speed * 5f, ForceMode2D.Force);
+
+        float angle = Mathf.Atan2(v2.y, v2.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2f);
 #endif
     }
 }
