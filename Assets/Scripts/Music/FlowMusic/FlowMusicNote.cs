@@ -14,9 +14,10 @@ public class FlowMusicNote : MonoBehaviour {
     private int SoundID;
     private Color c1 = Color.black;
     private Color c2 = Color.white;
+    private GameObject MusicStar;
       
     void Start ()
-    { 
+    {
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Mobile/Particles/Additive"));
         lineRenderer.widthMultiplier = 0.5f;
@@ -36,6 +37,7 @@ public class FlowMusicNote : MonoBehaviour {
         for (int i = 0; i < 12; i++)
         {
             GameObject note = Instantiate(Resources.Load("Prefabs/Note") as GameObject, transform.position, Quaternion.Euler(0f, 0f, 30 * i));
+            note.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
             note.transform.parent = transform;
             note.GetComponent<NoteIndicator>().LifeSpan = i * 0.25f + 0.25f;
         }
@@ -52,7 +54,13 @@ public class FlowMusicNote : MonoBehaviour {
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
             lineRenderer.enabled = true;
             lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, FlowMusicPlayer.Instance.transform.position); 
+            lineRenderer.SetPosition(1, FlowMusicPlayer.Instance.transform.position);
+
+            if (MusicStar == null)
+            {
+                MusicStar = Instantiate(Resources.Load("Prefabs/MusicStar") as GameObject, transform.position, Quaternion.identity); 
+                //MusicStar.transform.parent = this.transform;
+            }
         }
         else
         {

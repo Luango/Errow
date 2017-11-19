@@ -10,7 +10,7 @@ public class FlowMusicManager : MonoBehaviour {
     private int lineNo = 0;
     private Vector3 prePos;
     private int stepsCount;
-    private float stepSize = 0.27f;
+    private float stepSize = 0.15f;
     private static FlowMusicManager instance = null;
     private Vector2 FlowDirection;
 
@@ -71,7 +71,7 @@ public class FlowMusicManager : MonoBehaviour {
                     { 
                         Vector3 newPos = prePos + new Vector3(FlowDirection.x * stepSize * stepsCount* Random.Range(1f,1.2f), FlowDirection.y * stepSize * stepsCount * Random.Range(1f, 1.5f), 0f);
                         GameObject noteObj = (GameObject)Instantiate(musicNote, newPos, Quaternion.identity); 
-                        noteObj.GetComponent<SpriteRenderer>().enabled = true;
+                        //noteObj.GetComponent<SpriteRenderer>().enabled = true;
                         noteObj.GetComponent<FlowMusicNote>().enabled = true;
                         prePos = newPos;
                         stepsCount = 0;

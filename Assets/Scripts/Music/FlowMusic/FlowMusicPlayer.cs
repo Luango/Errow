@@ -5,7 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 
 public class FlowMusicPlayer : MonoBehaviour {
-    private float speed = 100f;
+    private float speed = 1500f;
 
     private static FlowMusicPlayer instance = null;
     private Rigidbody2D body;
@@ -43,17 +43,18 @@ public class FlowMusicPlayer : MonoBehaviour {
             v.Normalize();
             float angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg - 90f;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime*2f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
             body.AddForce(v * speed, ForceMode2D.Force);
         }
 
 #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
         // use accleration control 
         Vector2 v2 = new Vector2(Input.acceleration.x, Input.acceleration.y);  
+
         float angle = Mathf.Atan2(v2.y, v2.x) * Mathf.Rad2Deg - 90f;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2f);
-        body.AddForce(v2 * speed * 5f, ForceMode2D.Force);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
+        body.AddForce(v2 * speed * 2f, ForceMode2D.Force);
 #endif
     }
 }

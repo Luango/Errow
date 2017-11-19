@@ -61,7 +61,7 @@ public class FlowMusicManagerChord : MonoBehaviour {
                     {
                         GameObject noteObj = (GameObject)Instantiate(musicNote, FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(-15f, 15f), Random.Range(-15f, 15f), 0f), Quaternion.identity);
                         //noteObj.GetComponent<AudioSource>().enabled = true;
-                        noteObj.GetComponent<SpriteRenderer>().enabled = true;
+                        //noteObj.GetComponent<SpriteRenderer>().enabled = true;
                         noteObj.GetComponent<FlowMusicChordNote>().enabled = true;  
                     }
                 }

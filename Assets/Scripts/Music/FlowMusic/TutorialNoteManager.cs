@@ -19,7 +19,7 @@ public class TutorialNoteManager : MonoBehaviour {
         {
             GameObject noteObj = Instantiate(note, transform.position + new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0f), Quaternion.identity);
             noteObj.transform.parent = transform;
-            noteObj.GetComponent<SpriteRenderer>().enabled = true;
+            //noteObj.GetComponent<SpriteRenderer>().enabled = true;
             noteObj.GetComponent<FlowMusicNote>().enabled = true;
             noteObj.GetComponent<FlowMusicNote>().keySound = keySound;
 
