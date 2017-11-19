@@ -10,7 +10,7 @@ public class NoteIndicator : MonoBehaviour {
         LifeSpan -= Time.deltaTime; 
         if (LifeSpan <= 0f)
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
 	}
 }

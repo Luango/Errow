@@ -15,13 +15,21 @@ public class FlowMusicNote : MonoBehaviour {
     private Color c1 = Color.black;
     private Color c2 = Color.white;
     private GameObject MusicStar;
+    private float TimeNoteSpawn = -0.1f;
+    private List<GameObject> Notes = new List<GameObject>();
+    private int NoteNum = 0;
+    private float iniNoteOrientation;
       
     void Start ()
     {
+        iniNoteOrientation = Random.Range(-180f,180f);
+
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Mobile/Particles/Additive"));
         lineRenderer.widthMultiplier = 0.5f;
         lineRenderer.positionCount = 2;
+
+        transform.localScale = new Vector3(4.3f, 4.3f, 1f);
 
         //try 2 color gradient with a fixed alpha of 1.0f.
         float alpha = 1.0f;
@@ -32,22 +40,27 @@ public class FlowMusicNote : MonoBehaviour {
             );
         lineRenderer.colorGradient = gradient;
 
-        FileID = AndroidNativeAudio.load("Piano/" + keySound.name + ".wav");
-        this.transform.localScale = new Vector3(0f, 0f, 1f);
-        for (int i = 0; i < 12; i++)
-        {
-            GameObject note = Instantiate(Resources.Load("Prefabs/Note") as GameObject, transform.position, Quaternion.Euler(0f, 0f, 30 * i));
-            note.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-            note.transform.parent = transform;
-            note.GetComponent<NoteIndicator>().LifeSpan = i * 0.25f + 0.25f;
-        }
+        FileID = AndroidNativeAudio.load("Piano/" + keySound.name + ".wav"); 
     }
 	
 	// Update is called once per frame
 	void Update () {
+        TimeNoteSpawn -= Time.deltaTime;
+        if(TimeNoteSpawn<0 && NoteNum < 12)
+        { 
+            GameObject note = Instantiate(Resources.Load("Prefabs/Note") as GameObject, transform.position, Quaternion.Euler(0f, 0f, 30 * NoteNum + iniNoteOrientation));
+            note.transform.localScale = new Vector3(2.7f, 2.7f, 2.7f);
+            note.transform.parent = transform;
+            note.GetComponent<NoteIndicator>().LifeSpan =  3f - NoteNum * 0.25f;
+            Notes.Add(note);
+
+            NoteNum++;
+            TimeNoteSpawn = 0.25f;
+        }
+
         if (!isShrinking)
         {
-            this.transform.DOScale(new Vector3(4.30f, 4.30f, 1f), lifeSpan);
+            //this.transform.DOScale(new Vector3(4.30f, 4.30f, 1f), lifeSpan);
         } 
         if (CalculateDistanceFromPlayer() < threshold && !isShrinking)
         {
@@ -58,8 +71,7 @@ public class FlowMusicNote : MonoBehaviour {
 
             if (MusicStar == null)
             {
-                MusicStar = Instantiate(Resources.Load("Prefabs/MusicStar") as GameObject, transform.position, Quaternion.identity); 
-                //MusicStar.transform.parent = this.transform;
+                MusicStar = Instantiate(Resources.Load("Prefabs/MusicStar") as GameObject, transform.position, Quaternion.identity);
             }
         }
         else
@@ -72,7 +84,6 @@ public class FlowMusicNote : MonoBehaviour {
     private void FixedUpdate()
     {
         lifeSpan -= Time.deltaTime;
-
 
         if (lifeSpan < 0f && hasPlayed == false)
         {
@@ -94,8 +105,26 @@ public class FlowMusicNote : MonoBehaviour {
         {
             if (!isShrinking)
             {
-                isShrinking = true;
-                this.transform.DOScale(new Vector3(0.0f, 0.0f, 1f), 0.3f); 
+
+                if (CalculateDistanceFromPlayer() < threshold)
+                {
+                    if (Notes.Count > 0)
+                    {
+                        foreach (GameObject aNote in Notes)
+                        {
+                            aNote.transform.DOScale(new Vector3(0f, 0f, 0f), 1f);
+                            aNote.transform.DOMove(aNote.transform.up * 100f + transform.position, 1f).OnComplete(() =>
+                            {
+                                Destroy(aNote);
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    isShrinking = true;
+                    this.transform.DOScale(new Vector3(0.0f, 0.0f, 1f), 1f);
+                }
             }
         }
         else if(lifeSpan <= -1f)
