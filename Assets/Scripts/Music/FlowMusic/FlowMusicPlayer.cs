@@ -29,7 +29,6 @@ public class FlowMusicPlayer : MonoBehaviour {
 
     // Use this for initialization
     void Start () { 
-        //transform.DOScale(9.5f, 0.804f).SetLoops(-1, LoopType.Yoyo);
         body = GetComponent<Rigidbody2D>();
     } 
 

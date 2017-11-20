@@ -10,7 +10,7 @@ public class FlowMusicManager : MonoBehaviour {
     private int lineNo = 0;
     private Vector3 prePos;
     private int stepsCount;
-    private float stepSize = 0.15f;
+    private float stepSize = 0.25f;
     private static FlowMusicManager instance = null;
     private Vector2 FlowDirection;
 
