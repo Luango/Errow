@@ -61,24 +61,19 @@ public class FlowMusicNote : MonoBehaviour {
         if (!isShrinking)
         {
             //this.transform.DOScale(new Vector3(4.30f, 4.30f, 1f), lifeSpan);
-        } 
-        if (CalculateDistanceFromPlayer() < threshold && !isShrinking)
-        {
-            LineRenderer lineRenderer = GetComponent<LineRenderer>();
-            lineRenderer.enabled = true;
-            lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, FlowMusicPlayer.Instance.transform.position);
+        }
 
+        if (CalculateDistanceFromPlayer() < threshold && !isShrinking && MusicStar == null)
+        {
             if (MusicStar == null)
             {
                 MusicStar = Instantiate(Resources.Load("Prefabs/MusicStar") as GameObject, transform.position, Quaternion.identity);
             }
+
+            GameObject SeedStar = Instantiate(Resources.Load("Prefabs/MusicStar") as GameObject, transform.position, Quaternion.identity);
+            SeedStar.transform.position = FlowMusicPlayer.Instance.transform.position;
+            SeedStar.transform.DOMove(transform.position, 0.5f);
         }
-        else
-        {
-            LineRenderer lineRenderer = GetComponent<LineRenderer>();
-            lineRenderer.enabled = false; 
-        } 
     }
 
     private void FixedUpdate()
@@ -88,7 +83,7 @@ public class FlowMusicNote : MonoBehaviour {
         if (lifeSpan < 0f && hasPlayed == false)
         {
             hasPlayed = true;
-            if (CalculateDistanceFromPlayer() < threshold)
+            if (MusicStar!=null)
             {
                 SoundID = AndroidNativeAudio.play(FileID);
                 if (transform.parent != null)
@@ -104,9 +99,8 @@ public class FlowMusicNote : MonoBehaviour {
         else if (lifeSpan <= 0f && lifeSpan > -1f)
         {
             if (!isShrinking)
-            {
-
-                if (CalculateDistanceFromPlayer() < threshold)
+            { 
+                if (MusicStar!=null)
                 {
                     if (Notes.Count > 0)
                     {
