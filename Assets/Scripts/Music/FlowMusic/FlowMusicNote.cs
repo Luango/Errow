@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class FlowMusicNote : MonoBehaviour {  
     protected float lifeSpan = 3.0f;  
-    private float threshold = 30f; 
+    private float threshold = 40f; 
     
     public AudioClip keySound;
     private bool hasPlayed = false;
@@ -34,7 +34,8 @@ public class FlowMusicNote : MonoBehaviour {
             new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
             );
 
-        FileID = AndroidNativeAudio.load("Piano/" + keySound.name + ".wav"); 
+        FileID = AndroidNativeAudio.load("Piano/" + keySound.name + ".wav");
+        //FileID = AndroidNativeAudio.load("Piano/" + keySound.name + ".mp3");
     }
 	
 	// Update is called once per frame
@@ -92,7 +93,6 @@ public class FlowMusicNote : MonoBehaviour {
                     { 
                         foreach (GameObject aNote in Notes)
                         {
-                            aNote.transform.DOScale(new Vector3(0f, 0f, 0f), 1f);
                             aNote.transform.DOMove(aNote.transform.up * 10f + transform.position, 1f).OnComplete(() =>
                             {
                                 Destroy(aNote);

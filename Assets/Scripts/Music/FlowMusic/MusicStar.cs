@@ -16,17 +16,15 @@ public class MusicStar : MonoBehaviour {
     
     private void Update()
     {
-        if (RotSpan<0f) {
-            RotSpan -= Time.deltaTime;
-            transform.Rotate(Vector3.forward * Time.deltaTime * 100f);
-        }
+        transform.Rotate(Vector3.forward * Time.deltaTime * 100f); 
         LifeSpan -= Time.deltaTime;
-        if (LifeSpan < 2)
+        if (LifeSpan < 2 && LifeSpan>1)
         {
             transform.DOScale(new Vector3(0f, 0f, 0f), 1f);
-        }else if (LifeSpan < 0)
+        }else if (LifeSpan < 1)
         {
+            
             Destroy(this.gameObject);
-        }
+        } 
     }
 }

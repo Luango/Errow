@@ -69,7 +69,7 @@ public class FlowMusicManager : MonoBehaviour {
                     }
                     if (musicNote != null)
                     { 
-                        Vector3 newPos = prePos + new Vector3(FlowDirection.x * stepSize * stepsCount* Random.Range(1f,1.2f), FlowDirection.y * stepSize * stepsCount * Random.Range(1f, 1.5f), 0f);
+                        Vector3 newPos = prePos + new Vector3(FlowDirection.x * stepSize * stepsCount* Random.Range(1f,1.2f)*2f, FlowDirection.y * stepSize * stepsCount * Random.Range(1f, 1.5f), 0f);
                         GameObject noteObj = (GameObject)Instantiate(musicNote, newPos, Quaternion.identity); 
                         noteObj.GetComponent<FlowMusicNote>().enabled = true;
                         prePos = newPos;

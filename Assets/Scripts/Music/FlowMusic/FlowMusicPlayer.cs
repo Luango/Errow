@@ -53,7 +53,7 @@ public class FlowMusicPlayer : MonoBehaviour {
         float angle = Mathf.Atan2(v2.y, v2.x) * Mathf.Rad2Deg - 90f;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
-        body.AddForce(v2 * speed * 2f, ForceMode2D.Force);
+        body.AddForce(v2 * speed * 4f, ForceMode2D.Force);
 #endif
     }
 }

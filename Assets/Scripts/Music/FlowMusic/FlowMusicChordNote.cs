@@ -20,6 +20,7 @@ public class FlowMusicChordNote : MonoBehaviour {
     private void Awake()
     {
         FileID = AndroidNativeAudio.load("Piano/" + keySound.name + ".wav");
+        //FileID = AndroidNativeAudio.load("Piano/" + keySound.name + ".mp3");
 
     }
     // Use this for initialization
