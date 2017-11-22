@@ -6,10 +6,10 @@ using DG.Tweening;
 
 public class FlowMusicPlayer : MonoBehaviour {
     private float speed = 1500f;
-
-    private static FlowMusicPlayer instance = null;
     private Rigidbody2D body;
 
+    public Transform StoryTransform;
+    private static FlowMusicPlayer instance = null;
     public static FlowMusicPlayer Instance
     {
         get
@@ -17,6 +17,7 @@ public class FlowMusicPlayer : MonoBehaviour {
             return instance;
         }
     }
+
     private void Awake()
     {
         if(instance!= null && instance != this)
@@ -25,6 +26,8 @@ public class FlowMusicPlayer : MonoBehaviour {
         }
         instance = this;
         DontDestroyOnLoad(this.gameObject);
+
+        Vector3 StoryPos = transform.Find("StoryPos").position;
     }
 
     // Use this for initialization

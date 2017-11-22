@@ -7,7 +7,7 @@ public class FlowMusicManager : MonoBehaviour {
     public float DeltaTime;
     private float deltaTime;
     private string[] linesInFile;
-    private int lineNo = 0;
+    public int lineNo = 0;
     private Vector3 prePos;
     private int stepsCount;
     private float stepSize = 0.25f;
@@ -96,11 +96,11 @@ public class FlowMusicManager : MonoBehaviour {
     void ReadSheetCreateNotes()
     {
         string[] linesInFile = sheetMusic.text.Split('\n');
-        int lineNo = 0;
+        int i = 0;
         foreach (string line in linesInFile)
         {
             string[] notesInLine = line.Split(new char[0]);       
-            lineNo++;
+            i++;
         }
     }
 }
