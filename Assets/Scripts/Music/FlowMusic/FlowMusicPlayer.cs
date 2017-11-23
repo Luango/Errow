@@ -27,7 +27,7 @@ public class FlowMusicPlayer : MonoBehaviour {
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        Vector3 StoryPos = transform.Find("StoryPos").position;
+        StoryTransform = transform.Find("StoryPos");
     }
 
     // Use this for initialization
