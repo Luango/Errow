@@ -56,20 +56,22 @@ public class StoryManager : MonoBehaviour {
     {
         int totalVisibleCharacters = text.textInfo.characterCount;
         int counter = 0;
-
-        while (true)
+        bool isCompleted = false;
+        while (!isCompleted)
         {
             int visibleCount = counter % (totalVisibleCharacters + 1);
             text.maxVisibleCharacters = visibleCount;
 
             if (visibleCount >= totalVisibleCharacters)
             {
-                yield return new WaitForSeconds(1.0f);
+                isCompleted = true;
             }
 
             counter++;
 
             yield return new WaitForSeconds(0.05f);
         }
+        yield return new WaitForSeconds(5f);
+        Destroy(text.gameObject);
     }
 }

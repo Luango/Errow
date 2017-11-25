@@ -78,12 +78,12 @@ public class FlowMusicManager : MonoBehaviour {
                         var turnPossible = Random.Range(0f, 1f);
                         if (turnPossible > 0.05f)
                         {
-                            FlowDirection = new Vector2(FlowDirection.x + Random.Range(-0.6f, 0.6f), FlowDirection.y + Random.Range(-0.6f, 0.6f));
+                            FlowDirection = new Vector2(FlowDirection.x + Random.Range(-0.5f, 0.5f), FlowDirection.y + Random.Range(-0.5f, 0.1f));
                             FlowDirection.Normalize();
                         }
                         else
                         { 
-                            FlowDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                            FlowDirection = new Vector2(FlowDirection.x + Random.Range(-0.6f, 0.6f), FlowDirection.y + Random.Range(-0.8f, 0.1f));
                             FlowDirection.Normalize();
                         }
                     }
