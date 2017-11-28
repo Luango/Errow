@@ -43,7 +43,7 @@ public class FlowMusicManager : MonoBehaviour {
     }
      
     void Start () {
-        prePos = FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(3f, 6f), Random.Range(3f, 6f), 0f);
+        prePos = FlowMusicPlayer.Instance.transform.position + new Vector3(Random.Range(0f, 3f), Random.Range(-30f, -40f), 0f);
         stepsCount = 0;
         FlowDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         FlowDirection.Normalize();
