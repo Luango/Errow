@@ -44,8 +44,9 @@ public class FlowMusicNote : MonoBehaviour {
         if(TimeNoteSpawn<0 && NoteNum < 6)
         { 
             GameObject note = Instantiate(Resources.Load("Prefabs/Note") as GameObject, transform.position, Quaternion.Euler(0f, 0f, 60 * NoteNum + iniNoteOrientation));
-            note.transform.localScale = new Vector3(2.7f, 2.7f, 2.7f);
+            note.transform.localScale = new Vector3(4.7f, 4.7f, 4.7f);
             note.transform.parent = transform;
+            note.transform.position = new Vector3(note.transform.position.x, note.transform.position.y, -5);
             note.GetComponent<NoteIndicator>().LifeSpan =  3f - NoteNum * 0.5f;
             Notes.Add(note);
 

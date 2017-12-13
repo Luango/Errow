@@ -31,7 +31,7 @@ public class StoryLine : MonoBehaviour {
 
             yield return new WaitForSeconds(0.05f);
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(15f);
         Destroy(text.gameObject);
     }
 }
